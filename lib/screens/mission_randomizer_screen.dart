@@ -89,6 +89,65 @@ const _choiceMissions = [
   _MissionEntry(die: '', id: 'rearguard',    label: 'Rearguard'),
 ];
 
+// ── Extended Battle Plans (Missions Pack April 2023) ─────────────────────────
+// Same-plan pools — roll D6, winner of a separate roll attacks
+const _extBothAttackMissions = [
+  _MissionEntry(die: '1', id: 'counterattack',  label: 'Counterattack / Counterstrike'),
+  _MissionEntry(die: '2', id: 'dust_up',        label: 'Dust Up'),
+  _MissionEntry(die: '3', id: 'encounter',      label: 'Encounter'),
+  _MissionEntry(die: '4', id: 'free_for_all',   label: 'Free for All'),
+  _MissionEntry(die: '5', id: 'probe',          label: 'Probe'),
+  _MissionEntry(die: '6', id: 'scouts_out',     label: 'Scouts Out'),
+];
+
+const _extBothManoeuvreMissions = [
+  _MissionEntry(die: '1', id: 'counterattack',  label: 'Counterattack / Counterstrike'),
+  _MissionEntry(die: '2', id: 'dust_up',        label: 'Dust Up'),
+  _MissionEntry(die: '3', id: 'encounter',      label: 'Encounter'),
+  _MissionEntry(die: '4', id: 'outflanked',     label: 'Outflanked / Outmanoeuvred'),
+  _MissionEntry(die: '5', id: 'probe',          label: 'Probe'),
+  _MissionEntry(die: '6', id: 'scouts_out',     label: 'Scouts Out'),
+];
+
+const _extBothDefendMissions = [
+  _MissionEntry(die: '1', id: 'breakthrough',   label: 'Breakthrough'),
+  _MissionEntry(die: '2', id: 'dust_up',        label: 'Dust Up'),
+  _MissionEntry(die: '3', id: 'encounter',      label: 'Encounter'),
+  _MissionEntry(die: '4', id: 'free_for_all',   label: 'Free for All'),
+  _MissionEntry(die: '5', id: 'probe',          label: 'Probe'),
+  _MissionEntry(die: '6', id: 'scouts_out',     label: 'Scouts Out'),
+];
+
+// Attack vs Manoeuvre — Attack player attacks
+const _extAttackVsManoeuvreMissions = [
+  _MissionEntry(die: '1', id: 'breakthrough',         label: 'Breakthrough'),
+  _MissionEntry(die: '2', id: 'counterattack',        label: 'Counterattack / Counterstrike'),
+  _MissionEntry(die: '3', id: 'escape',               label: 'Escape'),
+  _MissionEntry(die: '4', id: 'fighting_withdrawal',  label: 'Fighting Withdrawal / Covering Force'),
+  _MissionEntry(die: '5', id: 'spearpoint',           label: 'Spearpoint / Bypass'),
+  _MissionEntry(die: '6', id: 'valley_of_death',      label: 'Valley of Death'),
+];
+
+// Attack vs Defend — Attack player attacks
+const _extAttackVsDefendMissions = [
+  _MissionEntry(die: '1', id: 'bridgehead',     label: 'Bridgehead'),
+  _MissionEntry(die: '2', id: 'dogfight',       label: 'Dogfight'),
+  _MissionEntry(die: '3', id: 'encirclement',   label: 'Encirclement / Hold the Pocket'),
+  _MissionEntry(die: '4', id: 'fighting_withdrawal', label: 'Fighting Withdrawal / Covering Force'),
+  _MissionEntry(die: '5', id: 'killing_ground', label: 'Killing Ground / It\'s a Trap'),
+  _MissionEntry(die: '6', id: 'no_retreat',     label: 'No Retreat'),
+];
+
+// Manoeuvre vs Defend — Manoeuvre player attacks
+const _extManoeuvreVsDefendMissions = [
+  _MissionEntry(die: '1', id: 'breakthrough',    label: 'Breakthrough'),
+  _MissionEntry(die: '2', id: 'cornered',        label: 'Cornered'),
+  _MissionEntry(die: '3', id: 'no_retreat',      label: 'No Retreat'),
+  _MissionEntry(die: '4', id: 'outflanked',      label: 'Outflanked / Outmanoeuvred'),
+  _MissionEntry(die: '5', id: 'spearpoint',      label: 'Spearpoint / Bypass'),
+  _MissionEntry(die: '6', id: 'valley_of_death', label: 'Valley of Death'),
+];
+
 class _MissionEntry {
   final String die;
   final String id;
@@ -119,6 +178,8 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
   bool _isRolling = false;
   int _dieValue = 1;
   Mission? _selectedMission;
+  bool _extendedMode = false;
+  _MissionEntry? _pendingEntry;
 
   late AnimationController _rollAnim;
   final _rng = Random();
@@ -158,6 +219,7 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
       _isRolling = false;
       _dieValue = 1;
       _selectedMission = null;
+      _pendingEntry = null;
     });
   }
 
@@ -165,7 +227,34 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
     setState(() { _isRolling = true; _selectedMission = null; });
     _rollAnim.reset();
 
-    final faces = _outcome!.isManoeuvre ? 3 : 6;
+    List<_MissionEntry> table;
+    if (_extendedMode) {
+      if (_outcome!.isManoeuvre) {
+        // Same plans — use per-plan extended pool (D6)
+        if (_p1Plan == _Plan.attack) {
+          table = _extBothAttackMissions;
+        } else if (_p1Plan == _Plan.manoeuvre) {
+          table = _extBothManoeuvreMissions;
+        } else {
+          table = _extBothDefendMissions;
+        }
+      } else {
+        // Different plans — determine which matchup
+        final attackerPlan = _outcome!.p1Attacks ? _p1Plan : _p2Plan;
+        final defenderPlan = _outcome!.p1Attacks ? _p2Plan : _p1Plan;
+        if (attackerPlan == _Plan.attack && defenderPlan == _Plan.manoeuvre) {
+          table = _extAttackVsManoeuvreMissions;
+        } else if (attackerPlan == _Plan.attack && defenderPlan == _Plan.defend) {
+          table = _extAttackVsDefendMissions;
+        } else { // manoeuvre vs defend
+          table = _extManoeuvreVsDefendMissions;
+        }
+      }
+    } else {
+      table = _outcome!.isManoeuvre ? _manoeuvreMissions : _attackDefendMissions;
+    }
+
+    final faces = table.length; // 3 or 6
     // Spin animation
     for (int i = 0; i < 20; i++) {
       await Future.delayed(const Duration(milliseconds: 45));
@@ -175,20 +264,23 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
     final roll = _rng.nextInt(faces) + 1;
     setState(() { _dieValue = roll; _isRolling = false; });
 
-    if (!_outcome!.isManoeuvre && roll == 6) {
-      // Player must choose — advance to choose step
+    final entry = table[roll - 1];
+
+    // Check if it's a choice (has '/')
+    if (!_extendedMode && !_outcome!.isManoeuvre && roll == 6) {
       setState(() => _step = _Step.choose);
+    } else if (entry.label.contains(' / ')) {
+      // Extended mode variant choice
+      setState(() { _step = _Step.choose; _pendingEntry = entry; });
     } else {
-      final table = _outcome!.isManoeuvre ? _manoeuvreMissions : _attackDefendMissions;
-      final entry = table[roll - 1];
-      final mission = fowMissions.firstWhere((m) => m.id == entry.id);
+      final mission = fowMissions.firstWhere((m) => m.id == entry.id, orElse: () => fowMissions.first);
       setState(() { _selectedMission = mission; _step = _Step.result; });
     }
   }
 
   void _chooseMission(String id) {
-    final mission = fowMissions.firstWhere((m) => m.id == id);
-    setState(() { _selectedMission = mission; _step = _Step.result; });
+    final mission = fowMissions.firstWhere((m) => m.id == id, orElse: () => fowMissions.first);
+    setState(() { _selectedMission = mission; _step = _Step.result; _pendingEntry = null; });
   }
 
   // ── Build ──────────────────────────────────────────────────────────────────
@@ -199,6 +291,32 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
       appBar: AppBar(
         title: const Text('RANDOM MISSION'),
         actions: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                _extendedMode ? 'Extended' : 'Standard',
+                style: TextStyle(
+                  color: _extendedMode ? AppColors.amber : AppColors.textMuted,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.8,
+                ),
+              ),
+              Switch(
+                value: _extendedMode,
+                onChanged: (v) {
+                  setState(() {
+                    _extendedMode = v;
+                    // Reset if mid-flow so tables re-select correctly
+                    if (_step != _Step.selectPlans) _reset();
+                  });
+                },
+                activeColor: AppColors.amber,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+            ],
+          ),
           if (_step != _Step.selectPlans)
             IconButton(
               icon: const Icon(Icons.refresh),
@@ -318,10 +436,31 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
 
   // ── Step 2 — Roll ─────────────────────────────────────────────────────────
 
+  List<_MissionEntry> _currentTable() {
+    if (_extendedMode) {
+      if (_outcome!.isManoeuvre) {
+        if (_p1Plan == _Plan.attack) return _extBothAttackMissions;
+        if (_p1Plan == _Plan.manoeuvre) return _extBothManoeuvreMissions;
+        return _extBothDefendMissions;
+      } else {
+        final attackerPlan = _outcome!.p1Attacks ? _p1Plan : _p2Plan;
+        final defenderPlan = _outcome!.p1Attacks ? _p2Plan : _p1Plan;
+        if (attackerPlan == _Plan.attack && defenderPlan == _Plan.manoeuvre) {
+          return _extAttackVsManoeuvreMissions;
+        } else if (attackerPlan == _Plan.attack && defenderPlan == _Plan.defend) {
+          return _extAttackVsDefendMissions;
+        } else {
+          return _extManoeuvreVsDefendMissions;
+        }
+      }
+    }
+    return _outcome!.isManoeuvre ? _manoeuvreMissions : _attackDefendMissions;
+  }
+
   Widget _buildRoll() {
     final isManoeuvre = _outcome!.isManoeuvre;
-    final table = isManoeuvre ? _manoeuvreMissions : _attackDefendMissions;
-    final faces = isManoeuvre ? 3 : 6;
+    final table = _currentTable();
+    final faces = table.length;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,7 +469,9 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
         const SizedBox(height: 20),
 
         SectionHeader(
-          title: isManoeuvre ? 'Meeting Engagement — Roll 1D3' : 'Attack / Defend Pool — Roll 1D6',
+          title: _extendedMode
+              ? (isManoeuvre ? 'Extended — Same Plan Pool — Roll 1D6' : 'Extended Battle Plans — Roll 1D6')
+              : (isManoeuvre ? 'Meeting Engagement — Roll 1D3' : 'Attack / Defend Pool — Roll 1D6'),
           icon: Icons.table_chart_outlined,
           color: isManoeuvre ? AppColors.amber : AppColors.attackerBlue,
         ),
@@ -365,9 +506,79 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
     );
   }
 
-  // ── Step 3 — Choose (on D6 = 6) ──────────────────────────────────────────
+  // ── Step 3 — Choose (on D6 = 6, or extended variant) ────────────────────
 
   Widget _buildChoose() {
+    // Extended mode: variant choice from _pendingEntry label (split at ' / ')
+    if (_pendingEntry != null) {
+      final parts = _pendingEntry!.label.split(' / ');
+      // Build a list of _MissionEntry from the variant ids in the label.
+      // The primary id is in _pendingEntry.id; we look up the variant by name.
+      final primaryId = _pendingEntry!.id;
+      // Find the variant id by matching name against fowMissions
+      final variantName = parts.length > 1 ? parts[1].trim() : '';
+      final variantMission = fowMissions.where(
+        (m) => m.name.toLowerCase() == variantName.toLowerCase(),
+      ).firstOrNull;
+      final primaryMission = fowMissions.firstWhere(
+        (m) => m.id == primaryId, orElse: () => fowMissions.first);
+
+      final choiceEntries = <(Mission, String)>[
+        (primaryMission, parts[0].trim()),
+        if (variantMission != null) (variantMission, variantName),
+      ];
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _OutcomeBanner(outcome: _outcome!, p1Name: 'Player 1', p2Name: 'Player 2', p1Plan: _p1Plan, p2Plan: _p2Plan),
+          const SizedBox(height: 16),
+
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppColors.amber.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.amber.withValues(alpha: 0.4)),
+            ),
+            child: Row(children: [
+              Container(
+                width: 44, height: 44,
+                decoration: BoxDecoration(
+                  color: AppColors.amber.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: AppColors.amber),
+                ),
+                child: Center(child: Text('$_dieValue', style: const TextStyle(
+                    color: AppColors.amber, fontSize: 22, fontWeight: FontWeight.w900))),
+              ),
+              const SizedBox(width: 14),
+              const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('VARIANT RESULT', style: TextStyle(color: AppColors.amber, fontSize: 12,
+                    fontWeight: FontWeight.w800, letterSpacing: 1.5)),
+                SizedBox(height: 4),
+                Text('Two variants are available. Choose which one to play.',
+                    style: TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.4)),
+              ])),
+            ]),
+          ),
+          const SizedBox(height: 20),
+
+          const SectionHeader(title: 'Choose Variant', icon: Icons.military_tech, color: AppColors.gold),
+
+          ...choiceEntries.map((pair) {
+            final (mission, _) = pair;
+            return _ChoiceCard(
+              mission: mission,
+              onChoose: () => _chooseMission(mission.id),
+            );
+          }),
+          const SizedBox(height: 24),
+        ],
+      );
+    }
+
+    // Standard mode: Breakthrough or Rearguard on roll 6
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -408,7 +619,7 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
         const SectionHeader(title: 'Choose Mission', icon: Icons.military_tech, color: AppColors.gold),
 
         ..._choiceMissions.map((entry) {
-          final mission = fowMissions.firstWhere((m) => m.id == entry.id);
+          final mission = fowMissions.firstWhere((m) => m.id == entry.id, orElse: () => fowMissions.first);
           return _ChoiceCard(
             mission: mission,
             onChoose: () => _chooseMission(entry.id),
@@ -1202,21 +1413,21 @@ class _TwoConceptsBox extends StatelessWidget {
                   fontSize: 9, fontWeight: FontWeight.w800, letterSpacing: 1.2)),
             ),
             const SizedBox(width: 10),
-            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Mission Type is determined', style: TextStyle(color: AppColors.cream,
+            const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('Mission Type is determined', style: TextStyle(color: AppColors.cream,
                   fontSize: 13, fontWeight: FontWeight.w700)),
-              const SizedBox(height: 4),
-              const Text(
+              SizedBox(height: 4),
+              Text(
                 'The combination of both plans decides the Mission Type:',
                 style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.5),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               _MissionTypeBadgeRow(
                 color: AppColors.amber,
                 label: 'Meeting Engagement',
                 desc: 'Same plan × Same plan — Roll 1D3',
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               _MissionTypeBadgeRow(
                 color: AppColors.attackerBlue,
                 label: 'Attack / Defend',

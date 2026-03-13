@@ -831,4 +831,1294 @@ const List<Mission> fowMissions = [
     reserveNote: 'No reserves — both sides deploy fully. Strategic Withdrawal removes units from Turn 2.',
     turnLimit: 9,
   ),
+
+  // ── MISSIONS PACK (April 2023) — NEW & VARIANT MISSIONS ──────────────────
+
+  Mission(
+    id: 'probe',
+    name: 'Probe',
+    type: MissionType.attackDefend,
+    tagline: 'Strike before the enemy knows you\'re there.',
+    overview:
+        'Both sides probe forward with advance guards and Immediate Reserves. '
+        'Victory objectives are contested from the very first turn — '
+        'a fast and furious engagement with no time to dig in.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Defender places two Objectives in the Attacker\'s half at least 16"/40cm from the centre line and 8"/20cm from short table edges.',
+      'Attacker places two Objectives in the Defender\'s half at least 16"/40cm from the centre line and 8"/20cm from short table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Both Sides — Immediate Reserves',
+        description:
+            'Both players deploy up to 60% of their force in their own half. '
+            'Remainder are Immediate Reserves arriving from their own long table edge (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Ambush (Defender)',
+        description: 'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Meeting Engagement applies to the Attacker\'s first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the Attacker\'s first turn only.',
+      'Defender may place Ambush unit at start of their first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective (from Turn 1)',
+        description:
+            'A player wins if they start any turn with a Tank, Infantry, or Gun team '
+            'within 4"/10cm of an Objective on the opponent\'s side, '
+            'and end it with no opposing teams within 4"/10cm of that Objective.',
+      ),
+    ],
+    specialRules: [
+      'Victory conditions active from Turn 1 — no waiting until Turn 6.',
+      'Both sides: Immediate Reserves from Turn 1 on 5+.',
+      'Meeting Engagement for Attacker\'s first turn only.',
+      'Defender may use Ambush (one Unit).',
+      '4 Objectives — 2 in each half.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Immediate Reserves from Turn 1 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'scouts_out',
+    name: 'Scouts Out',
+    type: MissionType.manoeuvre,
+    tagline: 'Recon units race ahead to seize key ground.',
+    overview:
+        'Both sides send their fastest scouts ahead before the main body deploys. '
+        'With Recce teams already in the field, the main force follows up '
+        'in a fluid Meeting Engagement over four objectives.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Starting with Player 1, each player places two Objectives in the opponent\'s half at least 8"/20cm from all table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Recce Forward Deployment',
+        description:
+            'Before normal deployment, each player may move any Recce or Scout Units up to 8"/20cm forward from their deployment zone.',
+      ),
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players take turns placing Units within 12"/30cm of their own long table edge.',
+      ),
+      DeploymentRule(
+        title: 'Full Deployment — No Reserves',
+        description: 'Both sides deploy their entire force. No Reserves.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'Recce/Scout Units may advance up to 8"/20cm before deployment.',
+      'Meeting Engagement applies to the first player\'s first turn.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they start their turn with a Tank, Infantry, or Gun team '
+            'within 4"/10cm of an Objective in the opponent\'s half, '
+            'and end it with no opposing teams within 4"/10cm of that Objective.',
+      ),
+    ],
+    specialRules: [
+      'Recce/Scout Units may advance 8"/20cm before normal deployment.',
+      'Meeting Engagement for first player\'s first turn.',
+      'No Reserves — full deployment.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'fighting_withdrawal',
+    name: 'Fighting Withdrawal',
+    type: MissionType.attackDefend,
+    tagline: 'Hold as long as possible, then pull back.',
+    overview:
+        'The Defender holds three objectives but must progressively withdraw. '
+        'Starting Turn 2, one objective is removed each turn as forces pull back. '
+        'The Attacker must capture objectives before they disappear. '
+        'Defender wins by surviving to Turn 6 with no objectives for the enemy to capture.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places three Objectives in the Defender\'s half: '
+          'one within 8"/20cm of the Defender\'s table edge, one at the centre, '
+          'and one between them. All at least 8"/20cm from the short table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Full Deployment',
+        description: 'Defender deploys all Units in their half.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description:
+            'Attacker deploys all Units within 12"/30cm of their own long table edge.',
+      ),
+      DeploymentRule(
+        title: 'Ambush (Defender)',
+        description: 'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Three Objectives in the Defender\'s half.',
+      'From Turn 2, Defender removes one Objective at start of each Defender\'s turn until one remains. The last Objective cannot be removed.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush unit at start of their first turn.',
+      'Starting Turn 2: Defender removes one Objective per turn (until 1 remains).',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Captures an Objective',
+        description:
+            'Attacker wins if they start their turn Holding an Objective in the Defender\'s half.',
+      ),
+      VictoryCondition(
+        title: 'Defender Completes Withdrawal',
+        description:
+            'Defender wins if they end Turn 6 with no Attacking teams within 8"/20cm of the last remaining Objective.',
+      ),
+    ],
+    specialRules: [
+      'Three Objectives placed in Defender\'s half.',
+      'From Turn 2: Defender removes 1 Objective per turn (until 1 remains — final cannot be removed).',
+      'Defender may use Ambush (one Unit).',
+      'No Reserves — both sides deploy fully.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'covering_force',
+    name: 'Covering Force',
+    type: MissionType.attackDefend,
+    tagline: 'Buy time for the army to escape — then get out yourself.',
+    overview:
+        'A variant of Fighting Withdrawal. The Defender fights a delaying action '
+        'with a Covering Force while the rest of the army escapes. '
+        'The Covering Force must withdraw before being destroyed.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives within 16"/40cm of the Defender\'s long table edge, '
+          'at least 16"/40cm from the side table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Full Deployment',
+        description: 'Defender deploys all Units in their table half.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description: 'Attacker deploys all Units within 8"/20cm of their own long table edge.',
+      ),
+      DeploymentRule(
+        title: 'Ambush (Defender)',
+        description: 'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Covering Force Withdrawal',
+        description:
+            'From Turn 2, Defender may withdraw one Unit per turn off the Defender\'s table edge. '
+            'A Unit not in Good Spirits when withdrawn counts as Destroyed for Victory Points.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Strategic Withdrawal begins from Turn 2.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush unit at start of their first turn.',
+      'From Turn 2: Defender may withdraw one Unit per turn off their table edge.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Captures an Objective',
+        description:
+            'Attacker wins if they start their turn Holding an Objective, '
+            'with no Defending teams within 4"/10cm of it.',
+      ),
+      VictoryCondition(
+        title: 'Defender Withdraws',
+        description:
+            'Defender wins at the start of their 9th turn (after checking Formation Morale).',
+      ),
+    ],
+    specialRules: [
+      'Strategic Withdrawal from Turn 2: Defender may remove one Unit per turn off their edge.',
+      'Withdrawn Units in Good Spirits do NOT count as Destroyed.',
+      'Defender may use Ambush (one Unit).',
+      'Defender wins at start of Turn 9.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 9,
+  ),
+
+  Mission(
+    id: 'spearpoint',
+    name: 'Spearpoint',
+    type: MissionType.attackDefend,
+    tagline: 'Drive a steel wedge through the enemy line.',
+    overview:
+        'The Attacker concentrates their force for a narrow spearhead assault '
+        'down the centre of the table. The Defender holds both flanks and '
+        'rushes reserves to seal the breach. '
+        'Victory objectives lie deep in the Defender\'s zone.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s half at least 8"/20cm from all table edges and at least 12"/30cm from the table centre.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Attacker — Spearhead Deployment',
+        description:
+            'Attacker deploys all Units within 12"/30cm of the long table centre line '
+            'and within 16"/40cm of their own short table edge.',
+      ),
+      DeploymentRule(
+        title: 'Defender — Flanking Deployment',
+        description:
+            'Defender deploys up to 60% of their force split between the two table quarters '
+            'adjacent to the Attacker\'s short edge (i.e. NOT directly opposite the Attacker). '
+            'Remainder are Immediate Reserves arriving from either of those corners.',
+      ),
+      DeploymentRule(
+        title: 'Reserve Arrival (Defender)',
+        description:
+            'Roll from Turn 1 on 5+. Reserves arrive within 16"/40cm of either of the Defender\'s flank corners.',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender\'s Immediate Reserves roll from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Defender rolls for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Breaks Through (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Repels the Spearhead (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Attacker deploys in a narrow central corridor.',
+      'Defender deploys on the flanks, NOT opposite the Attacker.',
+      'Defender: Immediate Reserves from Turn 1 on 5+ (own flank corners).',
+      'Defender may use Ambush (one Unit).',
+      'Victory conditions from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table. Immediate Reserves roll from Turn 1 on 5+, arrive at flank corners.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'bypass',
+    name: 'Bypass',
+    type: MissionType.attackDefend,
+    tagline: 'Cut around the flank and seize the rear.',
+    overview:
+        'A variant of Spearpoint. The Attacker bypasses the main defensive line '
+        'via a flanking route. Objectives are placed near both players\' edges '
+        'in a fast-moving race to hold ground deep in enemy territory. '
+        'Victory from Turn 3.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Defender places two Objectives up to 8"/20cm from the Attacker\'s table edge and more than 8"/20cm from the long table edges.',
+      'Attacker places two Objectives up to 16"/40cm from the opposite short table edge, at least 8"/20cm from the long table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender Deployment',
+        description:
+            'Defender\'s Deployment Area runs between their long table edge and the centre, '
+            '12"/30cm wide either side of the table centre. '
+            'Defender deploys up to 60% of their force there. No Spearhead.',
+      ),
+      DeploymentRule(
+        title: 'Attacker Deployment',
+        description:
+            'Attacker deploys up to 60% of their force in their half at least 24"/60cm from the long centre line. '
+            'No Spearhead. Immediate Reserves arrive from the Attacker\'s short table edge.',
+      ),
+      DeploymentRule(
+        title: 'Immediate Reserves (Attacker)',
+        description: 'Attacker rolls from Turn 1 on 5+ for Immediate Reserves, arriving from their short table edge.',
+      ),
+      DeploymentRule(
+        title: 'Scattered Delayed Reserves (Defender)',
+        description:
+            'Defender\'s remaining 40% are Scattered Delayed Reserves, rolling from Turn 3 on 5+. '
+            'Arrive within 16"/40cm of indicated corners or along Defender deployment edge.',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn (Meeting Engagement — Attacker counts as having moved).',
+      'Neither player may use the Spearhead rule.',
+      'Attacker rolls for Immediate Reserves from Turn 1.',
+      'Defender rolls for Scattered Delayed Reserves from Turn 3.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement (Attacker): counts as moved, no Bombardments or Aircraft on Turn 1.',
+      'Defender may place Ambush at start of their first turn.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Hold Your Own Objective (from Turn 3)',
+        description:
+            'A player wins if they end their turn on or after Turn 3 Holding an Objective they placed.',
+      ),
+    ],
+    specialRules: [
+      'No Spearhead for either player.',
+      'Meeting Engagement for Attacker\'s first turn.',
+      'Victory condition active from Turn 3.',
+      'Attacker: Immediate Reserves from Turn 1 on 5+ (own short edge).',
+      'Defender: Scattered Delayed Reserves from Turn 3 on 5+ (random corner/edge).',
+      'Defender may use Ambush (one Unit).',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Both sides: max 60% on table. Attacker Immediate from Turn 1; Defender Scattered Delayed from Turn 3.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'encirclement',
+    name: 'Encirclement',
+    type: MissionType.attackDefend,
+    tagline: 'The enemy is surrounded — close the ring.',
+    overview:
+        'The Defender is caught in a pocket with Attackers closing in from three sides. '
+        'The Defender must hold two objectives in their zone while the Attacker '
+        'tightens the noose. Defender reserves may only arrive from their one open flank.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Defender places two Objectives in their table quarter at least 8"/20cm from all table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Pocket Deployment',
+        description:
+            'Defender deploys up to 60% of their force in one table quarter. '
+            'Remainder are Immediate Reserves arriving only from the Defender\'s long table edge.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Three-Sided Deployment',
+        description:
+            'Attacker deploys up to 60% of their force split across the three remaining quarters. '
+            'Remainder are Immediate Reserves arriving from the Attacker\'s deployment edges.',
+      ),
+      DeploymentRule(
+        title: 'Reserve Arrival',
+        description:
+            'Defender rolls from Turn 1 on 5+, arriving only from the Defender\'s long table edge. '
+            'Attacker rolls from Turn 1 on 5+, arriving from any of the three Attacker deployment edges.',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender restricted to one escape route (own long table edge).',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Captures the Pocket (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding both Objectives.',
+      ),
+      VictoryCondition(
+        title: 'Defender Holds the Pocket (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Attacker deploys across three table quarters.',
+      'Defender confined to one table quarter, reserves arrive from own long edge only.',
+      'Both sides: Immediate Reserves from Turn 1 on 5+.',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Both sides: max 60% on table. Immediate Reserves from Turn 1 on 5+. Defender arrives from own long edge only.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'hold_the_pocket',
+    name: 'Hold the Pocket',
+    type: MissionType.attackDefend,
+    tagline: 'Hold your ground — every man counts.',
+    overview:
+        'A variant of Encirclement. The Defender holds a pocket with a critical resupply '
+        'corridor still open. The Attacker must seal all exits and capture both objectives '
+        'before the Defender can be relieved.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Defender places two Objectives in their table quarter at least 8"/20cm from all table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Pocket Deployment',
+        description:
+            'Defender deploys up to 60% of their force in one table quarter. '
+            'Remainder are Immediate Reserves, arriving from the Defender\'s long table edge or short corner.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Three-Sided Deployment',
+        description:
+            'Attacker deploys up to 60% across the three remaining table quarters. '
+            'Remainder are Immediate Reserves from any of their deployment edges.',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Seals the Pocket (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding both Objectives.',
+      ),
+      VictoryCondition(
+        title: 'Defender Holds Out (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Variant of Encirclement — Defender has slightly more flexible reserve arrival.',
+      'Attacker across three quarters; Defender confined to one.',
+      'Both sides: Immediate Reserves from Turn 1 on 5+.',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Immediate Reserves from Turn 1 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'escape',
+    name: 'Escape',
+    type: MissionType.attackDefend,
+    tagline: 'Break through — or be destroyed.',
+    overview:
+        'The Defender\'s force is surrounded and must break out. '
+        'The Attacker deploys across three sides and tries to destroy them before they escape. '
+        'The Defender wins by getting enough Units off the breakout table edge.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Escaping Force',
+    objectiveSetup: [
+      'No Objectives — victory is determined by Units escaping or being destroyed.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Escaping Force Deployment',
+        description:
+            'Defender deploys their entire force in one table quarter.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Three-Sided Deployment',
+        description:
+            'Attacker deploys up to 60% of their force across the three remaining table quarters. '
+            'Remainder are Immediate Reserves from any of their deployment edges (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Breakout Direction',
+        description:
+            'The Defender designates the short table edge opposite their deployment corner '
+            'as the Breakout Edge. Defender Units that exit off this edge are Escaped (not Destroyed).',
+      ),
+    ],
+    startingConditions: [
+      'The Defender has the first turn (they are trying to escape).',
+      'Attacker rolls for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender moves first — toward the Breakout Edge.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Escaping Force Breaks Out',
+        description:
+            'Defender wins if they exit at least half their starting Units off the Breakout Edge.',
+      ),
+      VictoryCondition(
+        title: 'Attacker Destroys the Pocket',
+        description:
+            'Attacker wins if fewer than half the Defender\'s starting Units escape.',
+      ),
+    ],
+    specialRules: [
+      'No Objectives — Units escaping off the Breakout Edge count as Escaped.',
+      'Defender moves first.',
+      'Attacker Immediate Reserves from Turn 1 on 5+.',
+      'Escaped Units do not count as Destroyed for Victory Points.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Attacker: max 60% on table. Immediate Reserves from Turn 1 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'dogfight',
+    name: 'Dogfight',
+    type: MissionType.attackDefend,
+    tagline: 'Air superiority decides the ground battle.',
+    overview:
+        'Both sides contest the skies while fighting on the ground. '
+        'Aircraft play a major role and each side has air support units '
+        'that can directly influence the battle. A single Objective in the centre must be held.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Place one Objective in the centre of the table.',
+      'The Attacker places one Objective in the Defender\'s half at least 12"/30cm from the centre and 8"/20cm from all table edges.',
+      'The Defender places one Objective in the Attacker\'s half with the same constraints.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender Deployment',
+        description:
+            'Defender deploys up to 60% of their force in their half. '
+            'Remainder are Immediate Reserves rolling from Turn 1 on 5+.',
+      ),
+      DeploymentRule(
+        title: 'Attacker Deployment',
+        description:
+            'Attacker deploys all Units in their half within 12"/30cm of their long table edge.',
+      ),
+      DeploymentRule(
+        title: 'Aircraft Priority',
+        description:
+            'Aircraft Units are always available regardless of reserve rolls. '
+            'Aircraft may arrive on any turn from Turn 1 even on a Meeting Engagement turn.',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Aircraft are always available from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Defender rolls for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Hold the Objectives',
+        description:
+            'A player wins if they end any turn on or after Turn 6 Holding two or more Objectives.',
+      ),
+    ],
+    specialRules: [
+      'Aircraft are always available from Turn 1 — no Meeting Engagement restriction on Aircraft.',
+      'Defender: Immediate Reserves from Turn 1 on 5+.',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6 — hold 2+ Objectives.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'gauntlet',
+    name: 'Gauntlet',
+    type: MissionType.attackDefend,
+    tagline: 'Drive through the killing zone.',
+    overview:
+        'The Attacker must push through a corridor of Defenders on both flanks. '
+        'Two objectives lie at the far end of the table. '
+        'The Defender has reserves arriving from both sides to close the trap.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s half at least 8"/20cm from all table edges '
+          'and within 8"/20cm of the short table edge opposite the Attacker.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Attacker — Central Corridor',
+        description:
+            'Attacker deploys all Units within 16"/40cm of the long table centre line '
+            'and within 12"/30cm of their own short table edge.',
+      ),
+      DeploymentRule(
+        title: 'Defender — Flanking Positions',
+        description:
+            'Defender deploys up to 60% of their force outside the central 16"/40cm corridor, '
+            'in their own half. Remainder are Immediate Reserves arriving from either short table edge.',
+      ),
+      DeploymentRule(
+        title: 'Reserve Arrival',
+        description:
+            'Defender rolls from Turn 1 on 5+. Reserves arrive within 16"/40cm of either short table edge corner in the Defender\'s half.',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender rolls for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Breaks Through (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Closes the Trap (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Attacker confined to central 16"/40cm corridor.',
+      'Defender on both flanks with reserves arriving from short edges.',
+      'Defender: Immediate Reserves from Turn 1 on 5+.',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+, arriving from short table edge corners.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'killing_ground',
+    name: 'Killing Ground',
+    type: MissionType.attackDefend,
+    tagline: 'Advance into the prepared kill zone.',
+    overview:
+        'The Defender has prepared a devastating kill zone with minefields and '
+        'carefully positioned units. The Attacker must advance through this and '
+        'capture objectives deep in the defensive position.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s half at least 12"/30cm from the centre line and 8"/20cm from the short table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Full Deployment with Minefields',
+        description:
+            'Defender deploys all Units in their table half. '
+            'Defender places one Minefield for each 25 points in their force, '
+            'anywhere outside the Attacker\'s deployment area.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description:
+            'Attacker deploys all Units within 12"/30cm of their own long table edge.',
+      ),
+      DeploymentRule(
+        title: 'Ambush (Defender)',
+        description: 'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender places Minefields before Attacker deploys.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Captures an Objective',
+        description:
+            'Attacker wins if they start their turn Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Holds the Kill Zone (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Defender places Minefields: one per 25 pts outside Attacker\'s zone.',
+      'No Reserves — both sides deploy fully.',
+      'Defender may use Ambush (one Unit).',
+      'Attacker may win any turn; Defender win condition activates Turn 6.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'its_a_trap',
+    name: 'It\'s a Trap',
+    type: MissionType.attackDefend,
+    tagline: 'The kill zone was bait — now the jaws close.',
+    overview:
+        'A variant of Killing Ground. The Defender lures the Attacker forward '
+        'before springing a flanking ambush. Additional flanking reserves '
+        'arrive once the Attacker is fully committed.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s half at least 12"/30cm from the centre line and 8"/20cm from the short table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Minefields + Flanking Reserves',
+        description:
+            'Defender deploys up to 60% in their half. '
+            'One Minefield per 25 pts placed outside Attacker\'s deployment area. '
+            'Remainder are Flanking Delayed Reserves arriving from the short table edges (roll from Turn 3 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description:
+            'Attacker deploys all Units within 12"/30cm of their own long table edge.',
+      ),
+      DeploymentRule(
+        title: 'Ambush (Defender)',
+        description: 'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender Flanking Reserves roll from Turn 3.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Defender Flanking Delayed Reserves roll from Turn 3 on 5+.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Breaks Through',
+        description:
+            'Attacker wins if they start their turn Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Closes the Trap (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Variant of Killing Ground — Defender has Flanking Reserves instead of full deployment.',
+      'Minefields: one per 25 pts outside Attacker\'s zone.',
+      'Defender: Flanking Delayed Reserves from Turn 3 on 5+, arriving from short table edges.',
+      'Defender may use Ambush (one Unit).',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table. Flanking Delayed Reserves from Turn 3 on 5+, arriving from short table edges.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'outflanked',
+    name: 'Outflanked',
+    type: MissionType.attackDefend,
+    tagline: 'The flanks are turning — hold the centre.',
+    overview:
+        'The Attacker drives at the centre while holding flanking reserves '
+        'to sweep around the defensive flanks. Objectives are placed in the Defender\'s half. '
+        'Flanking reserves arrive from the sides to cut off retreat.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s half at least 8"/20cm from all table edges '
+          'and at least 12"/30cm from the table centre.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Attacker — Flanking Delayed Reserves',
+        description:
+            'Attacker deploys up to 60% of their force in their half at least 12"/30cm from centre. '
+            'Remainder are Flanking Delayed Reserves arriving from either short table edge (roll from Turn 3 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Defender — Immediate Reserves',
+        description:
+            'Defender deploys up to 60% in their half. '
+            'Remainder are Immediate Reserves arriving from their long table edge (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Attacker Flanking Delayed Reserves from Turn 3; Defender Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Defender rolls for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Outflanks (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Holds the Line (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Attacker holds Flanking Delayed Reserves (from Turn 3 on 5+, own short table edges).',
+      'Defender: Immediate Reserves from Turn 1 on 5+ (own long edge).',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Both sides: max 60% on table. Attacker Flanking Delayed from Turn 3; Defender Immediate from Turn 1.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'outmanoeuvred',
+    name: 'Outmanoeuvred',
+    type: MissionType.attackDefend,
+    tagline: 'Speed and cunning beat brute force.',
+    overview:
+        'A variant of Outflanked. The Attacker uses superior mobility to outmanoeuvre '
+        'the defence. Both sides have Immediate Reserves, but the Attacker\'s '
+        'flanking force arrives earlier to exploit the gap.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s half at least 8"/20cm from all table edges '
+          'and at least 12"/30cm from the table centre.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Attacker — Immediate Flanking Reserves',
+        description:
+            'Attacker deploys up to 60% in their half at least 12"/30cm from centre. '
+            'Remainder are Immediate Flanking Reserves arriving from either short table edge (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Defender — Immediate Reserves',
+        description:
+            'Defender deploys up to 60% in their half. '
+            'Remainder are Immediate Reserves from their long table edge (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Outmanoeuvres (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Holds (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Variant of Outflanked — Attacker\'s flanking reserves arrive from Turn 1 (not Turn 3).',
+      'Both sides: Immediate Reserves from Turn 1 on 5+.',
+      'Attacker flanking reserves from own short table edges.',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Immediate Reserves from Turn 1 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'valley_of_death',
+    name: 'Valley of Death',
+    type: MissionType.attackDefend,
+    tagline: 'Cross the open ground — or die trying.',
+    overview:
+        'The Attacker must cross a deadly open valley while the Defender commands '
+        'the high ground on both flanks. Two objectives lie at the far end. '
+        'The Defender has Scattered Delayed Reserves arriving from the flanks to seal the valley exit.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s quarter of the table (far short edge), '
+          'at least 8"/20cm from all table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Attacker — Valley Entry',
+        description:
+            'Attacker deploys all Units within 12"/30cm of their own short table edge.',
+      ),
+      DeploymentRule(
+        title: 'Defender — Flank Command',
+        description:
+            'Defender deploys up to 60% of their force split across both long table edges '
+            'at least 12"/30cm from the short table edges. '
+            'Remainder are Scattered Delayed Reserves (roll from Turn 3 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender deploys along both long table edges — Attacker must cross the open centre.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Defender Scattered Delayed Reserves roll from Turn 3.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Exits the Valley (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Controls the Valley (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Defender deploys along BOTH long table edges (flanking the valley).',
+      'Attacker deploys from short edge and must cross open ground.',
+      'Defender: Scattered Delayed Reserves from Turn 3 on 5+ (random long edge arrival).',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table. Scattered Delayed Reserves from Turn 3 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'vanguard',
+    name: 'Vanguard',
+    type: MissionType.attackDefend,
+    tagline: 'Lead element — push through before they react.',
+    overview:
+        'The Attacker pushes a fast vanguard force forward to seize objectives '
+        'before the Defender can consolidate. Both sides have Scattered Delayed Reserves '
+        'that arrive as the battle develops. Victory is possible from Turn 1.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Defender places one Objective in their half at least 12"/30cm from centre and 8"/20cm from short edges.',
+      'Attacker places one Objective in the Defender\'s half (same constraints).',
+      'Place one Objective in the exact centre of the table.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Attacker — Vanguard Force',
+        description:
+            'Attacker deploys up to 60% in their half at least 12"/30cm from centre. '
+            'Remainder are Immediate Reserves from Attacker\'s long edge (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Defender — Scattered Delayed Reserves',
+        description:
+            'Defender deploys up to 60% in their half. '
+            'Remainder are Scattered Delayed Reserves arriving from random table edges (roll from Turn 3 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Victory objectives can be contested from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Attacker rolls for Immediate Reserves from Turn 1.',
+      'Defender rolls for Scattered Delayed Reserves from Turn 3.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective (from Turn 1)',
+        description:
+            'A player wins if they start any turn Holding an Objective, '
+            'with no opposing teams within 4"/10cm of it.',
+      ),
+    ],
+    specialRules: [
+      'Victory condition active from Turn 1.',
+      '3 Objectives: 1 in each half + 1 in centre.',
+      'Attacker: Immediate Reserves from Turn 1 on 5+ (own long edge).',
+      'Defender: Scattered Delayed Reserves from Turn 3 on 5+ (random edge).',
+      'Defender may use Ambush (one Unit).',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Both sides: max 60% on table. Attacker Immediate from Turn 1; Defender Scattered Delayed from Turn 3.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'cornered',
+    name: 'Cornered',
+    type: MissionType.attackDefend,
+    tagline: 'Nowhere to run — fight to the last.',
+    overview:
+        'The Defender is pushed into a table quarter with their back to the corner. '
+        'The Attacker strikes from the opposite short table edge with two objectives '
+        'placed in the Defender\'s corner. A brutal close-quarters engagement.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'The Attacker places two Objectives in the Defender\'s table quarter at least 4"/10cm from both centre lines and 12"/30cm from all table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Corner Deployment',
+        description:
+            'Defender deploys up to 60% in their table quarter or up to 4"/10cm into the Attacker\'s half. '
+            'Remainder are Immediate Reserves arriving within 16"/40cm of the Defender\'s corner.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description:
+            'Attacker deploys all Units in their half at least 20"/50cm from the short centre line.',
+      ),
+      DeploymentRule(
+        title: 'Defender Minefields',
+        description:
+            'Defender may place one Minefield for each 25 points in their force, '
+            'anywhere outside the Attacker\'s deployment area.',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender Immediate Reserves roll from Turn 1, arriving within 16"/40cm of their corner.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush at start of their first turn.',
+      'Defender rolls for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Captures an Objective (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Holds the Corner (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'Defender confined to one table quarter.',
+      'Defender Minefields: one per 25 pts outside Attacker\'s zone.',
+      'Defender: Immediate Reserves from Turn 1 on 5+ (own corner, within 16"/40cm).',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+, within 16"/40cm of Defender\'s corner.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'counterstrike',
+    name: 'Counterstrike',
+    type: MissionType.attackDefend,
+    tagline: 'The defence erupts into sudden offensive action.',
+    overview:
+        'A variant of Counterattack. The Defender strikes first in a Meeting Engagement, '
+        'catching the Attacker off-guard before they can consolidate. '
+        'Same quarter deployment — but the Defender moves first.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Defender places one Objective in their table quarter at least 8"/20cm from all table edges and 12"/30cm from table centre.',
+      'Attacker places one Objective in the quarter opposite to their own (same constraints).',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Quarters',
+        description:
+            'The Defender picks a table quarter. '
+            'The Attacker picks an adjacent quarter (sharing either a long or short table edge).',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description:
+            'Attacker deploys all Units in their table quarter at least 8"/20cm from both centre lines.',
+      ),
+      DeploymentRule(
+        title: 'Defender — Immediate Reserves',
+        description:
+            'Defender deploys up to 60% of their force in their quarter at least 12"/30cm from table centre. '
+            'Remainder are Immediate Reserves arriving within 16"/40cm of the opposite corner '
+            '(roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Ambush & Foxholes',
+        description:
+            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The DEFENDER has the first turn (Meeting Engagement — Defender counts as having moved).',
+      'Defender Immediate Reserves roll from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the DEFENDER\'s first turn (not the Attacker\'s).',
+      'Defender may place Ambush at start of their first turn.',
+      'Defender rolls for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Captures an Objective (Turn 6+)',
+        description:
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Counterstrike Succeeds (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack.',
+      ),
+    ],
+    specialRules: [
+      'DEFENDER goes first — Meeting Engagement applies to Defender\'s first turn.',
+      'Adjacent quarter deployment (same as Counterattack).',
+      'Defender: Immediate Reserves from Turn 1 on 5+ (opposite corner, within 16"/40cm).',
+      'Defender may use Ambush (one Unit).',
+      'Victory from Turn 6.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+, within 16"/40cm of opposite corner.',
+    turnLimit: 6,
+  ),
 ];
