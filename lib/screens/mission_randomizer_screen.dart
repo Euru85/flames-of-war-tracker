@@ -31,7 +31,7 @@ import 'mission_detail_screen.dart';
 // ─────────────────────────────────────────────────────────────────────────────
 
 enum _Plan { attack, defend, manoeuvre, none }
-enum _Pool { a, b, c, d }
+enum _Pool { a, b, c, d, e }
 
 // Outcome of comparing two plans
 class _Outcome {
@@ -56,17 +56,24 @@ _Outcome _resolve(_Plan p1, _Plan p2) {
   if (p1 == _Plan.defend && p2 == _Plan.manoeuvre) {
     return const _Outcome(rollForAttacker: false, p1Attacks: false, pool: _Pool.c);
   }
+  // Attack vs Manoeuvre → Attack player attacks, Pool E
+  if (p1 == _Plan.attack && p2 == _Plan.manoeuvre) {
+    return const _Outcome(rollForAttacker: false, p1Attacks: true,  pool: _Pool.e);
+  }
+  if (p1 == _Plan.manoeuvre && p2 == _Plan.attack) {
+    return const _Outcome(rollForAttacker: false, p1Attacks: false, pool: _Pool.e);
+  }
   // Defend vs Defend → roll who attacks, Pool D
   if (p1 == _Plan.defend && p2 == _Plan.defend) {
     return const _Outcome(rollForAttacker: true, pool: _Pool.d);
   }
-  // Attack vs Attack / Attack vs Manoeuvre / Manoeuvre vs Manoeuvre → roll, Pool A
+  // Attack vs Attack / Manoeuvre vs Manoeuvre → roll, Pool A
   return const _Outcome(rollForAttacker: true, pool: _Pool.a);
 }
 
 // ── Standard Battle Plans mission pools ──────────────────────────────────────
 
-// Pool A — AA / AM / MM: roll D6 to determine who attacks, then play mission
+// Pool A — AA / MM: roll D6 to determine who attacks, then play mission
 const _poolA = [
   _MissionEntry(die: '1', id: 'breakthrough',  label: 'Breakthrough'),
   _MissionEntry(die: '2', id: 'counterattack', label: 'Counterattack'),
@@ -76,6 +83,16 @@ const _poolA = [
   _MissionEntry(die: '6', id: 'free_for_all',  label: 'Free for All'),
 ];
 
+// Pool E — Attack vs Manoeuvre: Attack player attacks, D6
+const _poolE = [
+  _MissionEntry(die: '1', id: 'breakthrough',  label: 'Breakthrough'),
+  _MissionEntry(die: '2', id: 'probe',         label: 'Probe'),
+  _MissionEntry(die: '3', id: 'counterattack', label: 'Counterattack'),
+  _MissionEntry(die: '4', id: 'counterattack', label: 'Counterattack'),
+  _MissionEntry(die: '5', id: 'dust_up',       label: 'Dust Up'),
+  _MissionEntry(die: '6', id: 'encounter',     label: 'Encounter'),
+];
+
 // Pool B — Attack vs Defend: Attack player attacks, roll D3 (1–2 / 3–4 / 5–6)
 const _poolB = [
   _MissionEntry(die: '1', id: 'bridgehead',         label: 'Bridgehead (1–2)'),
@@ -83,21 +100,24 @@ const _poolB = [
   _MissionEntry(die: '3', id: 'fighting_withdrawal', label: 'Fighting Withdrawal (5–6)'),
 ];
 
-// Pool C — Manoeuvre vs Defend: manoeuvre player attacks, roll D3
+// Pool C — Manoeuvre vs Defend: manoeuvre player attacks, roll D6
 const _poolC = [
-  _MissionEntry(die: '1', id: 'bridgehead',          label: 'Bridgehead (1–2)'),
-  _MissionEntry(die: '2', id: 'no_retreat',           label: 'No Retreat (3–4)'),
-  _MissionEntry(die: '3', id: 'fighting_withdrawal',  label: 'Fighting Withdrawal (5–6)'),
-];
-
-// Pool D — Defend vs Defend: roll D6 to determine who attacks
-const _poolD = [
   _MissionEntry(die: '1', id: 'breakthrough',        label: 'Breakthrough'),
   _MissionEntry(die: '2', id: 'bridgehead',          label: 'Bridgehead'),
   _MissionEntry(die: '3', id: 'probe',               label: 'Probe'),
   _MissionEntry(die: '4', id: 'no_retreat',          label: 'No Retreat'),
   _MissionEntry(die: '5', id: 'no_retreat',          label: 'No Retreat'),
   _MissionEntry(die: '6', id: 'fighting_withdrawal', label: 'Fighting Withdrawal'),
+];
+
+// Pool D — Defend vs Defend: roll D6 to determine who attacks
+const _poolD = [
+  _MissionEntry(die: '1', id: 'breakthrough',  label: 'Breakthrough'),
+  _MissionEntry(die: '2', id: 'counterattack', label: 'Counterattack'),
+  _MissionEntry(die: '3', id: 'dust_up',       label: 'Dust Up'),
+  _MissionEntry(die: '4', id: 'encounter',     label: 'Encounter'),
+  _MissionEntry(die: '5', id: 'free_for_all',  label: 'Free for All'),
+  _MissionEntry(die: '6', id: 'free_for_all',  label: 'Free for All'),
 ];
 
 // ── Extended Battle Plans (Missions Pack April 2023) ─────────────────────────
@@ -132,9 +152,9 @@ const _extBothDefendMissions = [
 // Attack vs Manoeuvre (AM / MA) — Attack player attacks
 const _extAttackVsManoeuvreMissions = [
   _MissionEntry(die: '1', id: 'breakthrough',        label: 'Breakthrough'),
-  _MissionEntry(die: '2', id: 'cornered',            label: 'Cornered'),
-  _MissionEntry(die: '3', id: 'no_retreat',          label: 'No Retreat'),
-  _MissionEntry(die: '4', id: 'outflanked',          label: 'Outflanked / Outmanoeuvred'),
+  _MissionEntry(die: '2', id: 'counterattack',       label: 'Counterattack / Counterstrike'),
+  _MissionEntry(die: '3', id: 'escape',              label: 'Escape'),
+  _MissionEntry(die: '4', id: 'fighting_withdrawal', label: 'Fighting Withdrawal / Covering Force'),
   _MissionEntry(die: '5', id: 'spearpoint',          label: 'Spearpoint / Bypass'),
   _MissionEntry(die: '6', id: 'valley_of_death',     label: 'Valley of Death'),
 ];
@@ -152,9 +172,9 @@ const _extAttackVsDefendMissions = [
 // Manoeuvre vs Defend (MD / DM) — Manoeuvre player attacks
 const _extManoeuvreVsDefendMissions = [
   _MissionEntry(die: '1', id: 'breakthrough',         label: 'Breakthrough'),
-  _MissionEntry(die: '2', id: 'counterattack',        label: 'Counterattack / Counterstrike'),
-  _MissionEntry(die: '3', id: 'escape',               label: 'Escape'),
-  _MissionEntry(die: '4', id: 'fighting_withdrawal',  label: 'Fighting Withdrawal / Covering Force'),
+  _MissionEntry(die: '2', id: 'cornered',             label: 'Cornered'),
+  _MissionEntry(die: '3', id: 'no_retreat',           label: 'No Retreat'),
+  _MissionEntry(die: '4', id: 'outflanked',           label: 'Outflanked / Outmanoeuvred'),
   _MissionEntry(die: '5', id: 'spearpoint',           label: 'Spearpoint / Bypass'),
   _MissionEntry(die: '6', id: 'valley_of_death',      label: 'Valley of Death'),
 ];
@@ -320,7 +340,12 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
 
         // 3×3 combination table
         const SectionHeader(title: 'Combination Table', icon: Icons.table_chart_outlined, color: AppColors.khaki),
-        _CombinationTable(p1Plan: _revealed ? _p1Plan : _Plan.none, p2Plan: _revealed ? _p2Plan : _Plan.none),
+        _CombinationTable(
+          p1Plan: _revealed ? _p1Plan : _Plan.none,
+          p2Plan: _revealed ? _p2Plan : _Plan.none,
+          locked: !_revealed && (_p1Plan != _Plan.none || _p2Plan != _Plan.none),
+          extendedMode: _extendedMode,
+        ),
         const SizedBox(height: 20),
 
         // Mode toggle
@@ -472,6 +497,7 @@ class _MissionRandomizerScreenState extends State<MissionRandomizerScreen>
       case _Pool.b: return _poolB;
       case _Pool.c: return _poolC;
       case _Pool.d: return _poolD;
+      case _Pool.e: return _poolE;
     }
   }
 
@@ -770,9 +796,11 @@ class _StepBar extends StatelessWidget {
 class _CombinationTable extends StatelessWidget {
   final _Plan p1Plan;
   final _Plan p2Plan;
-  const _CombinationTable({required this.p1Plan, required this.p2Plan});
+  final bool locked;
+  final bool extendedMode;
+  const _CombinationTable({required this.p1Plan, required this.p2Plan, this.locked = false, this.extendedMode = false});
 
-  static const _plans = [_Plan.attack, _Plan.defend, _Plan.manoeuvre];
+  static const _plans = [_Plan.attack, _Plan.manoeuvre, _Plan.defend];
   static const _planLabels = {
     _Plan.attack: 'ATTACK',
     _Plan.defend: 'DEFEND',
@@ -801,6 +829,30 @@ class _CombinationTable extends StatelessWidget {
     return out.p1Attacks ? AppColors.attackerBlue : AppColors.defenderBrown;
   }
 
+  List<String> _cellMissions(_Plan row, _Plan col) {
+    if (extendedMode) {
+      if (row == col) {
+        if (row == _Plan.attack)    return ['Counterattack/CS', 'Dust Up', 'Encounter', 'Free for All', 'Probe', 'Scouts Out'];
+        if (row == _Plan.manoeuvre) return ['Counterattack/CS', 'Dust Up', 'Encounter', 'Outflanked', 'Probe', 'Scouts Out'];
+        return                             ['Breakthrough', 'Dust Up', 'Encounter', 'Free for All', 'Probe', 'Scouts Out'];
+      }
+      final a = row == _Plan.attack   || col == _Plan.attack;
+      final m = row == _Plan.manoeuvre || col == _Plan.manoeuvre;
+      final d = row == _Plan.defend   || col == _Plan.defend;
+      if (a && m) return ['Breakthrough', 'Counterattack/CS', 'Escape', 'Fighting Withdrawal', 'Spearpoint', 'Valley of Death'];
+      if (a && d) return ['Bridgehead', 'Dogfight', 'Encirclement', 'Fighting Withdrawal', 'Killing Ground', 'No Retreat'];
+      if (m && d) return ['Breakthrough', 'Cornered', 'No Retreat', 'Outflanked', 'Spearpoint', 'Valley of Death'];
+    }
+    final pool = _resolve(row, col).pool;
+    switch (pool) {
+      case _Pool.a: return ['Breakthrough', 'Counterattack', 'Dust Up', 'Encounter', 'Free for All'];
+      case _Pool.e: return ['Breakthrough', 'Probe', 'Counterattack', 'Counterattack', 'Dust Up', 'Encounter'];
+      case _Pool.b: return ['Bridgehead', 'No Retreat', 'Fighting Withdrawal'];
+      case _Pool.c: return ['Breakthrough', 'Bridgehead', 'Probe', 'No Retreat', 'Fighting Withdrawal'];
+      case _Pool.d: return ['Breakthrough', 'Counterattack', 'Dust Up', 'Encounter', 'Free for All'];
+    }
+  }
+
   bool _isHighlighted(_Plan row, _Plan col) =>
       p1Plan != _Plan.none && p2Plan != _Plan.none && row == p1Plan && col == p2Plan;
 
@@ -809,7 +861,7 @@ class _CombinationTable extends StatelessWidget {
     const headerStyle = TextStyle(color: AppColors.textMuted, fontSize: 9,
         fontWeight: FontWeight.w700, letterSpacing: 1.2);
 
-    return Container(
+    final table = Container(
       decoration: BoxDecoration(
         color: AppColors.darkCard,
         borderRadius: BorderRadius.circular(8),
@@ -887,6 +939,16 @@ class _CombinationTable extends StatelessWidget {
                           height: 1.3,
                         ),
                       ),
+                      const SizedBox(height: 4),
+                      ..._cellMissions(row, col).map((m) => Text(
+                        m,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.textMuted.withValues(alpha: highlighted ? 0.9 : 0.6),
+                          fontSize: 7,
+                          height: 1.4,
+                        ),
+                      )),
                     ]),
                   ),
                 );
@@ -895,6 +957,35 @@ class _CombinationTable extends StatelessWidget {
           ),
         ])),
       ]),
+    );
+
+    if (!locked) return table;
+
+    return Stack(
+      children: [
+        table,
+        Positioned.fill(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              color: AppColors.darkCard.withValues(alpha: 0.82),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.lock_outline, color: AppColors.lightOlive, size: 28),
+                  SizedBox(height: 8),
+                  Text('PLANS CHOSEN', style: TextStyle(
+                      color: AppColors.lightOlive, fontSize: 11,
+                      fontWeight: FontWeight.w800, letterSpacing: 1.5)),
+                  SizedBox(height: 4),
+                  Text('Waiting for reveal', style: TextStyle(
+                      color: AppColors.textMuted, fontSize: 10)),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -918,8 +1009,8 @@ class _PlanSelector extends StatelessWidget {
 
   static const _options = [
     ('ATTACK',     Icons.arrow_upward,    _Plan.attack,    AppColors.red),
-    ('DEFEND',     Icons.shield_outlined, _Plan.defend,    AppColors.defenderBrown),
     ('MANOEUVRE',  Icons.swap_horiz,      _Plan.manoeuvre, AppColors.amber),
+    ('DEFEND',     Icons.shield_outlined, _Plan.defend,    AppColors.defenderBrown),
   ];
 
   @override
@@ -939,8 +1030,27 @@ class _PlanSelector extends StatelessWidget {
             fontWeight: FontWeight.w800, letterSpacing: 1.5)),
         const SizedBox(height: 10),
         if (revealed && selected != _Plan.none)
-          // Show revealed choice prominently
           _RevealedPlan(plan: selected)
+        else if (!revealed && selected != _Plan.none)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            decoration: BoxDecoration(
+              color: AppColors.darkGrey,
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(color: AppColors.lightOlive.withValues(alpha: 0.5)),
+            ),
+            child: Column(children: [
+              Icon(Icons.lock_outline, color: AppColors.lightOlive, size: 24),
+              const SizedBox(height: 8),
+              const Text('PLAN CHOSEN', style: TextStyle(
+                  color: AppColors.lightOlive, fontSize: 10,
+                  fontWeight: FontWeight.w800, letterSpacing: 1.5)),
+              const SizedBox(height: 4),
+              const Text('waiting for reveal', style: TextStyle(
+                  color: AppColors.textMuted, fontSize: 9)),
+            ]),
+          )
         else
           Column(children: _options.map((opt) {
             final (lbl, icon, plan, optColor) = opt;
@@ -971,17 +1081,6 @@ class _PlanSelector extends StatelessWidget {
               ),
             );
           }).toList()),
-        // Show "chosen" indicator when something is selected but not yet revealed
-        if (!revealed && selected != _Plan.none) ...[
-          const SizedBox(height: 6),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(width: 6, height: 6, decoration: const BoxDecoration(
-                color: AppColors.lightOlive, shape: BoxShape.circle)),
-            const SizedBox(width: 6),
-            const Text('CHOSEN', style: TextStyle(
-                color: AppColors.lightOlive, fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 1.5)),
-          ]),
-        ],
       ]),
     );
   }
@@ -1039,7 +1138,7 @@ class _OutcomeBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = outcome.rollForAttacker ? AppColors.amber : AppColors.attackerBlue;
     final poolName = outcome.pool.name.toUpperCase();
-    final dieSize = (outcome.pool == _Pool.b || outcome.pool == _Pool.c) ? 3 : 6;
+    final dieSize = outcome.pool == _Pool.b ? 3 : 6;
     final poolLabel = outcome.rollForAttacker
         ? 'POOL $poolName — Roll D$dieSize (also roll to determine who attacks)'
         : 'POOL $poolName — Roll D$dieSize';
@@ -1358,14 +1457,16 @@ class _TwoConceptsBox extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('Choose a Battle Plan', style: TextStyle(color: AppColors.cream,
+              Text('Choose a Battle Plan secretly', style: TextStyle(color: AppColors.cream,
                   fontSize: 13, fontWeight: FontWeight.w700)),
               SizedBox(height: 4),
               Text(
-                'Each player secretly picks one of three Battle Plans:\n'
+                'Each player secretly picks one of three Battle Plans — '
+                'your choice is locked and hidden until both players have chosen, '
+                'then both plans are revealed simultaneously.\n\n'
                 '  • Attack — you intend to assault the enemy\n'
-                '  • Defend — you intend to hold your ground\n'
-                '  • Manoeuvre — flexible, neither purely attacking nor defending',
+                '  • Manoeuvre — flexible, neither purely attacking nor defending\n'
+                '  • Defend — you intend to hold your ground',
                 style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.5),
               ),
             ])),
@@ -1392,24 +1493,36 @@ class _TwoConceptsBox extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('Mission Type is determined', style: TextStyle(color: AppColors.cream,
+              Text('Mission pool is determined by plan combination', style: TextStyle(color: AppColors.cream,
                   fontSize: 13, fontWeight: FontWeight.w700)),
               SizedBox(height: 4),
               Text(
-                'The combination of both plans decides the Mission Type:',
+                'Cross-reference both plans to find the pool, then roll for mission:',
                 style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.5),
               ),
-              SizedBox(height: 6),
+              SizedBox(height: 8),
               _MissionTypeBadgeRow(
                 color: AppColors.amber,
-                label: 'Meeting Engagement',
-                desc: 'Same plan × Same plan — Roll 1D3',
+                label: 'Pool A — D6',
+                desc: 'Same plan (AA / MM) or Attack vs Manoeuvre — roll to determine attacker',
               ),
               SizedBox(height: 6),
               _MissionTypeBadgeRow(
                 color: AppColors.attackerBlue,
-                label: 'Attack / Defend',
-                desc: 'Different plans — Roll 1D6, one player attacks',
+                label: 'Pool B — D3',
+                desc: 'Attack vs Defend — Attack player attacks',
+              ),
+              SizedBox(height: 6),
+              _MissionTypeBadgeRow(
+                color: AppColors.lightOlive,
+                label: 'Pool C — D6',
+                desc: 'Manoeuvre vs Defend — Manoeuvre player attacks',
+              ),
+              SizedBox(height: 6),
+              _MissionTypeBadgeRow(
+                color: AppColors.defenderBrown,
+                label: 'Pool D — D6',
+                desc: 'Defend vs Defend — roll to determine attacker',
               ),
             ])),
           ]),
