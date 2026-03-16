@@ -189,7 +189,7 @@ class _BattleTab extends StatelessWidget {
           _VictoryDeclarationCard(battle: battle),
           const SizedBox(height: 16),
 
-          // End turn button
+          // End turn / End round button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(

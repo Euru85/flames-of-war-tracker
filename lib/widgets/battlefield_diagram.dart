@@ -95,6 +95,45 @@ class _BattlefieldPainter extends CustomPainter {
         _breakthrough(canvas, cw, ch);
       case 'rearguard':
         _rearguard(canvas, cw, ch);
+      // ── Extended / Missions Pack missions ──────────────────────────────
+      case 'probe':
+        _probe(canvas, cw, ch);
+      case 'scouts_out':
+        _scoutsOut(canvas, cw, ch);
+      case 'fighting_withdrawal':
+        _fightingWithdrawal(canvas, cw, ch);
+      case 'covering_force':
+        _coveringForce(canvas, cw, ch);
+      case 'spearpoint':
+        _spearpoint(canvas, cw, ch);
+      case 'bypass':
+        _bypass(canvas, cw, ch);
+      case 'encirclement':
+        _encirclement(canvas, cw, ch);
+      case 'hold_the_pocket':
+        _holdThePocket(canvas, cw, ch);
+      case 'escape':
+        _escape(canvas, cw, ch);
+      case 'dogfight':
+        _dogfight(canvas, cw, ch);
+      case 'gauntlet':
+        _gauntlet(canvas, cw, ch);
+      case 'killing_ground':
+        _killingGround(canvas, cw, ch);
+      case 'its_a_trap':
+        _itsATrap(canvas, cw, ch);
+      case 'outflanked':
+        _outflanked(canvas, cw, ch);
+      case 'outmanoeuvred':
+        _outmanoeuvred(canvas, cw, ch);
+      case 'valley_of_death':
+        _valleyOfDeath(canvas, cw, ch);
+      case 'vanguard':
+        _vanguard(canvas, cw, ch);
+      case 'cornered':
+        _cornered(canvas, cw, ch);
+      case 'counterstrike':
+        _counterstrike(canvas, cw, ch);
       default:
         _freeForAll(canvas, cw, ch);
     }
@@ -522,6 +561,291 @@ class _BattlefieldPainter extends CustomPainter {
         AppColors.gold, cw, ch);
     _dim(canvas, _pt(56, 18, cw, ch), _pt(72, 18, cw, ch), '16"',
         AppColors.gold, cw, ch);
+  }
+
+  // ── Extended / Missions Pack layouts ───────────────────────────────────────
+
+  // Probe: both sides 12" long edges, 4 objectives (2 each half, 16"+ from centre)
+  void _probe(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'ATK\n12"', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 12, cw, ch), AppColors.defenderBrown, 'DEF\n12"', cw, ch);
+    _objZone(canvas, _rc(8, 0, 56, 8, cw, ch), cw, ch);
+    _objZone(canvas, _rc(8, 40, 56, 8, cw, ch), cw, ch);
+    _obj(canvas, _pt(22, 4, cw, ch), cw, ch);
+    _obj(canvas, _pt(50, 4, cw, ch), cw, ch);
+    _obj(canvas, _pt(22, 44, cw, ch), cw, ch);
+    _obj(canvas, _pt(50, 44, cw, ch), cw, ch);
+    _dim(canvas, _pt(3, 36, cw, ch), _pt(3, 48, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _dim(canvas, _pt(3, 0, cw, ch), _pt(3, 12, cw, ch), '12"', AppColors.defenderBrown, cw, ch);
+    _text(canvas, _pt(36, 24, cw, ch), '4 objectives — 2 each half\n16"+ from centre',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Scouts Out: FFA layout + Recce advance annotation
+  void _scoutsOut(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'P1\n12"', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 12, cw, ch), AppColors.defenderBrown, 'P2\n12"', cw, ch);
+    _objZone(canvas, _rc(0, 0, 72, 8, cw, ch), cw, ch);
+    _objZone(canvas, _rc(0, 40, 72, 8, cw, ch), cw, ch);
+    _obj(canvas, _pt(20, 4, cw, ch), cw, ch);
+    _obj(canvas, _pt(52, 4, cw, ch), cw, ch);
+    _obj(canvas, _pt(20, 44, cw, ch), cw, ch);
+    _obj(canvas, _pt(52, 44, cw, ch), cw, ch);
+    _dim(canvas, _pt(3, 36, cw, ch), _pt(3, 48, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _dim(canvas, _pt(3, 0, cw, ch), _pt(3, 12, cw, ch), '12"', AppColors.defenderBrown, cw, ch);
+    _dim(canvas, _pt(69, 28, cw, ch), _pt(69, 36, cw, ch), '8"', Colors.white38, cw, ch);
+    _text(canvas, _pt(36, 22, cw, ch), 'Recce advance 8" before deploy',
+        Colors.white38, cw, ch, size: 6.0);
+  }
+
+  // Fighting Withdrawal: ATK 12", DEF full half, 3 objectives progressively withdrawn
+  void _fightingWithdrawal(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'ATK\n12"', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.defenderBrown, 'DEF\nhalf', cw, ch);
+    _obj(canvas, _pt(20, 4, cw, ch), cw, ch);
+    _obj(canvas, _pt(36, 12, cw, ch), cw, ch);
+    _obj(canvas, _pt(52, 20, cw, ch), cw, ch);
+    _dim(canvas, _pt(3, 36, cw, ch), _pt(3, 48, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _text(canvas, _pt(36, 29, cw, ch), '3 objectives withdrawn from Turn 2',
+        Colors.white38, cw, ch, size: 5.5);
+    _text(canvas, _pt(20, 8, cw, ch), 'last', AppColors.gold.withValues(alpha: 0.7), cw, ch, size: 5.5);
+    _text(canvas, _pt(36, 16, cw, ch), '2nd', AppColors.gold.withValues(alpha: 0.7), cw, ch, size: 5.5);
+    _text(canvas, _pt(52, 20, cw, ch), '1st', AppColors.gold.withValues(alpha: 0.7), cw, ch, size: 5.5);
+  }
+
+  // Covering Force: ATK 8", DEF full half, 2 objectives near DEF edge
+  void _coveringForce(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 40, 72, 8, cw, ch), AppColors.attackerBlue, 'ATK\n8"', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.defenderBrown, 'DEF\nhalf', cw, ch);
+    _objZone(canvas, _rc(16, 0, 40, 16, cw, ch), cw, ch);
+    _obj(canvas, _pt(26, 9, cw, ch), cw, ch);
+    _obj(canvas, _pt(46, 9, cw, ch), cw, ch);
+    _dim(canvas, _pt(3, 40, cw, ch), _pt(3, 48, cw, ch), '8"', AppColors.attackerBlue, cw, ch);
+    _dim(canvas, _pt(69, 0, cw, ch), _pt(69, 16, cw, ch), '16"', AppColors.gold, cw, ch);
+    _dim(canvas, _pt(0, 18, cw, ch), _pt(16, 18, cw, ch), '16"', AppColors.gold, cw, ch);
+    _text(canvas, _pt(36, 29, cw, ch), 'Covering Force — withdraw from Turn 2',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Spearpoint: ATK narrow central corridor from short edge, DEF flanks
+  // Short-edge orientation: ATK = left, DEF = right flanks
+  void _spearpoint(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 12, 16, 24, cw, ch), AppColors.attackerBlue, 'ATK\nspearhead', cw, ch);
+    _zone(canvas, _rc(36, 0, 36, 24, cw, ch), AppColors.defenderBrown, 'DEF\nflank', cw, ch);
+    _zone(canvas, _rc(36, 24, 36, 24, cw, ch), AppColors.defenderBrown, 'DEF\nflank', cw, ch);
+    _vCentre(canvas, cw, ch);
+    _objZone(canvas, _rc(40, 12, 28, 24, cw, ch), cw, ch);
+    _obj(canvas, _pt(52, 18, cw, ch), cw, ch);
+    _obj(canvas, _pt(60, 30, cw, ch), cw, ch);
+    _dim(canvas, _pt(0, 24, cw, ch), _pt(16, 24, cw, ch), '16"', AppColors.attackerBlue, cw, ch);
+    _dim(canvas, _pt(0, 12, cw, ch), _pt(0, 36, cw, ch), '24"', AppColors.attackerBlue, cw, ch);
+    _text(canvas, _pt(4, 44, cw, ch), '← ATK edge', AppColors.attackerBlue, cw, ch, size: 6.5);
+    _text(canvas, _pt(36, 44, cw, ch), 'SHORT EDGE MISSION', Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Bypass: variant of Spearpoint — ATK outer flanks, DEF central band, objectives both ends
+  void _bypass(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 0, 36, 12, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(0, 36, 36, 12, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(20, 12, 32, 24, cw, ch), AppColors.defenderBrown, 'DEF\ncentral', cw, ch);
+    _vCentre(canvas, cw, ch);
+    _objZone(canvas, _rc(0, 8, 8, 32, cw, ch), cw, ch);
+    _objZone(canvas, _rc(64, 8, 8, 32, cw, ch), cw, ch);
+    _obj(canvas, _pt(4, 20, cw, ch), cw, ch);
+    _obj(canvas, _pt(4, 36, cw, ch), cw, ch);
+    _obj(canvas, _pt(68, 20, cw, ch), cw, ch);
+    _obj(canvas, _pt(68, 36, cw, ch), cw, ch);
+    _text(canvas, _pt(4, 44, cw, ch), '← ATK', AppColors.attackerBlue, cw, ch, size: 6.5);
+    _text(canvas, _pt(36, 44, cw, ch), 'SHORT EDGE MISSION', Colors.white38, cw, ch, size: 5.5);
+    _text(canvas, _pt(36, 7, cw, ch), 'Win by Holding your own objectives (Turn 3+)',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Encirclement: DEF in one quarter (bottom-left), ATK in three quarters
+  void _encirclement(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 24, 36, 24, cw, ch), AppColors.defenderBrown, 'DEF\nquarter', cw, ch);
+    _zone(canvas, _rc(0, 0, 36, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(36, 0, 36, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(36, 24, 36, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _vCentre(canvas, cw, ch);
+    _objZone(canvas, _rc(4, 28, 28, 16, cw, ch), cw, ch);
+    _obj(canvas, _pt(12, 32, cw, ch), cw, ch);
+    _obj(canvas, _pt(24, 40, cw, ch), cw, ch);
+    _dim(canvas, _pt(0, 24, cw, ch), _pt(36, 24, cw, ch), '36"', Colors.white38, cw, ch);
+    _text(canvas, _pt(18, 28, cw, ch), 'DEF reserves\n← own edge only',
+        AppColors.defenderBrown.withValues(alpha: 0.8), cw, ch, size: 5.5);
+  }
+
+  // Hold the Pocket: same quarter layout as Encirclement
+  void _holdThePocket(Canvas canvas, double cw, double ch) {
+    _encirclement(canvas, cw, ch);
+    _text(canvas, _pt(54, 44, cw, ch), 'Hold the Pocket', Colors.white38, cw, ch, size: 6.0);
+  }
+
+  // Escape: DEF in one quarter, ATK in three, DEF breakout to far short edge
+  void _escape(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 24, 36, 24, cw, ch), AppColors.defenderBrown, 'DEF\npocket', cw, ch);
+    _zone(canvas, _rc(0, 0, 36, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(36, 0, 36, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(36, 24, 36, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _vCentre(canvas, cw, ch);
+    final bp = Paint()
+      ..color = AppColors.amber
+      ..strokeWidth = 2.0;
+    canvas.drawLine(_pt(36, 36, cw, ch), _pt(68, 36, cw, ch), bp);
+    canvas.drawLine(_pt(68, 36, cw, ch), _pt(62, 32, cw, ch), bp);
+    canvas.drawLine(_pt(68, 36, cw, ch), _pt(62, 40, cw, ch), bp);
+    _text(canvas, _pt(52, 30, cw, ch), 'BREAKOUT →', AppColors.amber, cw, ch, size: 6.5);
+    _text(canvas, _pt(18, 40, cw, ch), 'DEF moves first',
+        AppColors.defenderBrown.withValues(alpha: 0.8), cw, ch, size: 5.5);
+  }
+
+  // Dogfight: ATK 12", DEF half 60%, 3 objectives (centre + 1 each half), aircraft priority
+  void _dogfight(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'ATK\n12"', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.defenderBrown, 'DEF\nhalf (60%)', cw, ch);
+    _obj(canvas, _pt(36, 24, cw, ch), cw, ch);
+    _obj(canvas, _pt(22, 10, cw, ch), cw, ch);
+    _obj(canvas, _pt(50, 38, cw, ch), cw, ch);
+    _dim(canvas, _pt(3, 36, cw, ch), _pt(3, 48, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _text(canvas, _pt(36, 29, cw, ch), '3 objectives — hold 2+ from Turn 6',
+        Colors.white38, cw, ch, size: 5.5);
+    _text(canvas, _pt(36, 33, cw, ch), 'Aircraft always available T1+',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Gauntlet: ATK central corridor from short edge, DEF flanks, objectives near far edge
+  void _gauntlet(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 16, 12, 16, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(36, 0, 36, 16, cw, ch), AppColors.defenderBrown, 'DEF\nflank', cw, ch);
+    _zone(canvas, _rc(36, 32, 36, 16, cw, ch), AppColors.defenderBrown, 'DEF\nflank', cw, ch);
+    _vCentre(canvas, cw, ch);
+    _objZone(canvas, _rc(64, 14, 8, 20, cw, ch), cw, ch);
+    _obj(canvas, _pt(68, 18, cw, ch), cw, ch);
+    _obj(canvas, _pt(68, 30, cw, ch), cw, ch);
+    _dim(canvas, _pt(0, 16, cw, ch), _pt(0, 32, cw, ch), '16"', AppColors.attackerBlue, cw, ch);
+    _dim(canvas, _pt(0, 24, cw, ch), _pt(12, 24, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _text(canvas, _pt(4, 44, cw, ch), '← ATK edge', AppColors.attackerBlue, cw, ch, size: 6.5);
+    _text(canvas, _pt(36, 44, cw, ch), 'SHORT EDGE MISSION', Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Helper: draw X minefield markers in defender's half
+  void _minefields(Canvas canvas, double cw, double ch) {
+    final mp = Paint()
+      ..color = const Color(0xFFCC4444)
+      ..strokeWidth = 1.2;
+    for (final p in [
+      _pt(28, 16, cw, ch), _pt(36, 20, cw, ch),
+      _pt(44, 16, cw, ch), _pt(52, 14, cw, ch),
+    ]) {
+      final r = _px(2.5, cw);
+      canvas.drawLine(Offset(p.dx - r, p.dy - r), Offset(p.dx + r, p.dy + r), mp);
+      canvas.drawLine(Offset(p.dx + r, p.dy - r), Offset(p.dx - r, p.dy + r), mp);
+    }
+  }
+
+  // Killing Ground: ATK 12", DEF full half with minefields, 2 objectives 12"+ from centre
+  void _killingGround(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'ATK\n12"', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.defenderBrown, 'DEF\nhalf', cw, ch);
+    _objZone(canvas, _rc(8, 0, 56, 12, cw, ch), cw, ch);
+    _obj(canvas, _pt(22, 6, cw, ch), cw, ch);
+    _obj(canvas, _pt(50, 6, cw, ch), cw, ch);
+    _minefields(canvas, cw, ch);
+    _dim(canvas, _pt(3, 36, cw, ch), _pt(3, 48, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _dim(canvas, _pt(69, 0, cw, ch), _pt(69, 12, cw, ch), '12"', AppColors.gold, cw, ch);
+    _text(canvas, _pt(36, 30, cw, ch), 'DEF places Minefields (1 per 25 pts)',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // It's a Trap: Killing Ground layout but DEF has 60% + flanking delayed reserves
+  void _itsATrap(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'ATK\n12"', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.defenderBrown, 'DEF\n60%', cw, ch);
+    _objZone(canvas, _rc(8, 0, 56, 12, cw, ch), cw, ch);
+    _obj(canvas, _pt(22, 6, cw, ch), cw, ch);
+    _obj(canvas, _pt(50, 6, cw, ch), cw, ch);
+    _minefields(canvas, cw, ch);
+    final ap = Paint()
+      ..color = AppColors.defenderBrown
+      ..strokeWidth = 1.5;
+    canvas.drawLine(_pt(0, 24, cw, ch), _pt(10, 18, cw, ch), ap);
+    canvas.drawLine(_pt(72, 24, cw, ch), _pt(62, 18, cw, ch), ap);
+    _text(canvas, _pt(36, 30, cw, ch), 'DEF flanks arrive from short edges (Turn 3)',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Outflanked: ATK 60% long edge with flanking delayed reserves from short edges
+  void _outflanked(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'ATK\n60%', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.defenderBrown, 'DEF\n60%', cw, ch);
+    _objZone(canvas, _rc(8, 0, 56, 12, cw, ch), cw, ch);
+    _obj(canvas, _pt(22, 6, cw, ch), cw, ch);
+    _obj(canvas, _pt(50, 6, cw, ch), cw, ch);
+    final ap = Paint()
+      ..color = AppColors.attackerBlue
+      ..strokeWidth = 1.5;
+    canvas.drawLine(_pt(0, 30, cw, ch), _pt(10, 20, cw, ch), ap);
+    canvas.drawLine(_pt(72, 30, cw, ch), _pt(62, 20, cw, ch), ap);
+    _dim(canvas, _pt(3, 36, cw, ch), _pt(3, 48, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _text(canvas, _pt(36, 29, cw, ch), 'ATK flanks arrive from short edges (Turn 3)',
+        AppColors.attackerBlue.withValues(alpha: 0.8), cw, ch, size: 5.5);
+  }
+
+  // Outmanoeuvred: same as Outflanked but ATK flanks arrive Turn 1 (not Turn 3)
+  void _outmanoeuvred(Canvas canvas, double cw, double ch) {
+    _outflanked(canvas, cw, ch);
+    _text(canvas, _pt(54, 44, cw, ch), 'ATK flanks T1+', AppColors.attackerBlue, cw, ch, size: 6.0);
+  }
+
+  // Valley of Death: ATK from short edge, DEF along both long edges, objects far quarter
+  void _valleyOfDeath(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 0, 12, 48, cw, ch), AppColors.attackerBlue, 'ATK\n12"', cw, ch);
+    _zone(canvas, _rc(12, 0, 48, 10, cw, ch), AppColors.defenderBrown, 'DEF\nN flank', cw, ch);
+    _zone(canvas, _rc(12, 38, 48, 10, cw, ch), AppColors.defenderBrown, 'DEF\nS flank', cw, ch);
+    _vCentre(canvas, cw, ch);
+    _objZone(canvas, _rc(60, 10, 12, 28, cw, ch), cw, ch);
+    _obj(canvas, _pt(66, 16, cw, ch), cw, ch);
+    _obj(canvas, _pt(66, 32, cw, ch), cw, ch);
+    _dim(canvas, _pt(0, 3, cw, ch), _pt(12, 3, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _dim(canvas, _pt(12, 45, cw, ch), _pt(0, 45, cw, ch), '12"', AppColors.defenderBrown, cw, ch);
+    _text(canvas, _pt(36, 24, cw, ch), 'valley (open ground)',
+        Colors.white38, cw, ch, size: 6.0);
+    _text(canvas, _pt(4, 44, cw, ch), '← ATK', AppColors.attackerBlue, cw, ch, size: 6.5);
+    _text(canvas, _pt(36, 44, cw, ch), 'SHORT EDGE MISSION', Colors.white38, cw, ch, size: 5.0);
+  }
+
+  // Vanguard: ATK 60%, DEF 60%, 3 objectives (centre + 1 each half), win from Turn 1
+  void _vanguard(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 36, 72, 12, cw, ch), AppColors.attackerBlue, 'ATK\n60%', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.defenderBrown, 'DEF\n60%', cw, ch);
+    _obj(canvas, _pt(36, 24, cw, ch), cw, ch);
+    _obj(canvas, _pt(22, 10, cw, ch), cw, ch);
+    _obj(canvas, _pt(50, 38, cw, ch), cw, ch);
+    _dim(canvas, _pt(3, 36, cw, ch), _pt(3, 48, cw, ch), '12"', AppColors.attackerBlue, cw, ch);
+    _text(canvas, _pt(36, 29, cw, ch), '3 objectives — win from Turn 1',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Cornered: DEF in one quarter, ATK in full opposite half + adjacent quarter
+  void _cornered(Canvas canvas, double cw, double ch) {
+    _zone(canvas, _rc(0, 24, 36, 24, cw, ch), AppColors.defenderBrown, 'DEF\ncorner', cw, ch);
+    _zone(canvas, _rc(0, 0, 72, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _zone(canvas, _rc(36, 24, 36, 24, cw, ch), AppColors.attackerBlue, 'ATK', cw, ch);
+    _vCentre(canvas, cw, ch);
+    _objZone(canvas, _rc(4, 28, 28, 16, cw, ch), cw, ch);
+    _obj(canvas, _pt(12, 32, cw, ch), cw, ch);
+    _obj(canvas, _pt(24, 40, cw, ch), cw, ch);
+    _dim(canvas, _pt(20, 25, cw, ch), _pt(36, 25, cw, ch), '16"',
+        AppColors.attackerBlue, cw, ch);
+    _text(canvas, _pt(52, 10, cw, ch), 'ATK deploys\n20"+ from\nshort centre',
+        Colors.white38, cw, ch, size: 5.5);
+  }
+
+  // Counterstrike: same deployment as Counterattack, but Defender goes first
+  void _counterstrike(Canvas canvas, double cw, double ch) {
+    _counterattack(canvas, cw, ch);
+    _text(canvas, _pt(52, 6, cw, ch), 'DEF goes first!', AppColors.amber, cw, ch, size: 6.5);
   }
 
   @override

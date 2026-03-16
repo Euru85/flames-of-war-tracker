@@ -4,27 +4,27 @@ class AppColors {
   // Military palette
   static const Color darkOlive = Color(0xFF2D3A1E);
   static const Color olive = Color(0xFF4A5C2A);
-  static const Color lightOlive = Color(0xFF6B7C3D);
-  static const Color khaki = Color(0xFFB5A469);
+  static const Color lightOlive = Color(0xFF8EA050);
+  static const Color khaki = Color(0xFFBFAE72);
   static const Color sand = Color(0xFFD4C48A);
   static const Color cream = Color(0xFFF2E9C9);
 
   static const Color bloodRed = Color(0xFF8B1A1A);
   static const Color red = Color(0xFFCC2222);
-  static const Color amber = Color(0xFFD4870A);
-  static const Color gold = Color(0xFFCFA82E);
+  static const Color amber = Color(0xFFE09A18);
+  static const Color gold = Color(0xFFD4B030);
 
   static const Color darkGrey = Color(0xFF1C1F17);
   static const Color darkCard = Color(0xFF252A1A);
   static const Color cardBg = Color(0xFF2E3520);
   static const Color divider = Color(0xFF3D4A25);
 
-  static const Color textPrimary = Color(0xFFE8DFB8);
-  static const Color textSecondary = Color(0xFFA8A080);
-  static const Color textMuted = Color(0xFF6A6448);
+  static const Color textPrimary = Color(0xFFEEE8C4);
+  static const Color textSecondary = Color(0xFFC0B890);
+  static const Color textMuted = Color(0xFF908870);
 
-  static const Color attackerBlue = Color(0xFF2A5C8B);
-  static const Color defenderBrown = Color(0xFF7A4A1E);
+  static const Color attackerBlue = Color(0xFF5B9ED4);
+  static const Color defenderBrown = Color(0xFFB87840);
 }
 
 class AppTheme {

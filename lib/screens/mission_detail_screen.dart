@@ -88,7 +88,15 @@ class MissionDetailScreen extends StatelessWidget {
                     color: AppColors.khaki,
                   ),
                   const SizedBox(height: 8),
-                  BattlefieldDiagram(mission: mission),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.asset(
+                      'assets/missions/${mission.id}.png',
+                      width: double.infinity,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, __, ___) => BattlefieldDiagram(mission: mission),
+                    ),
+                  ),
                   if (mission.hasReserves) ...[
                     const SizedBox(height: 8),
                     Container(
