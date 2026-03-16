@@ -974,19 +974,35 @@ class _VictoryDeclarationCard extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.khaki,
+                side: const BorderSide(color: AppColors.khaki),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+              ),
+              icon: const Icon(Icons.balance, size: 16),
+              label: const Text('DECLARE DRAW',
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+              onPressed: () => _declareWin(context, BattleResult.draw, 'Battle ended in a draw.\nBoth players score Victory Points as the Loser.'),
+            ),
+          ),
         ],
       ),
     );
   }
 
   void _declareWin(BuildContext context, BattleResult result, String reason) {
+    final isDraw = result == BattleResult.draw;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.cardBg,
-        title: const Text('CONFIRM VICTORY',
+        title: Text(isDraw ? 'CONFIRM DRAW' : 'CONFIRM VICTORY',
             style: TextStyle(
-                color: AppColors.gold,
+                color: isDraw ? AppColors.khaki : AppColors.gold,
                 letterSpacing: 1.5,
                 fontSize: 15)),
         content: Text(
@@ -1276,19 +1292,6 @@ class _OptionsSheet extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
             _addNote(battleContext);
-          },
-        ),
-        _SheetOption(
-          icon: Icons.military_tech_outlined,
-          label: 'End Battle — Declare Draw',
-          onTap: () {
-            Navigator.pop(context);
-            battleContext.read<BattleProvider>().declareVictory(
-                BattleResult.draw, 'Battle ended in a draw.');
-            Navigator.pushReplacement(
-              battleContext,
-              MaterialPageRoute(builder: (_) => const SummaryScreen()),
-            );
           },
         ),
         _SheetOption(

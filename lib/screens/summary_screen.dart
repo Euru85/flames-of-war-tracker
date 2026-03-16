@@ -260,12 +260,12 @@ class _VictoryPointsCard extends StatelessWidget {
   String get _resultLabel {
     switch (result) {
       case BattleResult.player1Wins:
-        if (p1.victoryPoints == 6) return 'Decisive Victory';
-        if (p1.victoryPoints == 5) return 'Victory';
+        if (p1.victoryPoints >= 8) return 'Decisive Victory';
+        if (p1.victoryPoints >= 7) return 'Victory';
         return 'Marginal Victory';
       case BattleResult.player2Wins:
-        if (p2.victoryPoints == 6) return 'Decisive Victory';
-        if (p2.victoryPoints == 5) return 'Victory';
+        if (p2.victoryPoints >= 8) return 'Decisive Victory';
+        if (p2.victoryPoints >= 7) return 'Victory';
         return 'Marginal Victory';
       case BattleResult.draw:
         return 'Draw';
@@ -356,7 +356,7 @@ class _VictoryPointsCard extends StatelessWidget {
           const Divider(),
           const SizedBox(height: 8),
           const Text(
-            '6:0 Decisive Victory  •  5:1 Victory  •  4:2 Marginal Victory  •  3:3 Draw',
+            '8:1 Decisive Victory  •  7:2 Victory  •  6:3 Marginal Victory  •  Draw: both score as Loser',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.textMuted,

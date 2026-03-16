@@ -174,8 +174,9 @@ class BattleProvider extends ChangeNotifier {
         p1vp = _calcLoserVP(p1, p2);
         break;
       case BattleResult.draw:
-        p1vp = 3;
-        p2vp = 3;
+        // Both players treat their opponent as the winner — each gains Loser VP
+        p1vp = _calcLoserVP(p1, p2);
+        p2vp = _calcLoserVP(p2, p1);
         break;
       default:
         break;
