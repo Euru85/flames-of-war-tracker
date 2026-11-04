@@ -347,6 +347,7 @@ const List<Mission> fowMissions = [
     defenderRole: 'Defender',
     objectiveSetup: [
       'Starting with the Defender, each player places one Objective in the Defender\'s half.',
+      'Defender places one Minefield for each 25 points or part thereof in their force, anywhere outside the Attacker\'s deployment area.',
       'Each Objective must be at least 8"/20cm from the table centre line and all table edges.',
     ],
     deploymentRules: [
@@ -411,6 +412,7 @@ const List<Mission> fowMissions = [
       'Defender may use Ambush (one Unit).',
       'Deep Immediate Reserves: limited heavy tanks/aircraft on-table; rest must be in Reserve.',
       'Reserves arrive from Defender\'s short table edge from Turn 1 on 5+.',
+      'Defender places Minefields: one per 25 pts, outside Attacker\'s deployment area.',
     ],
     hasReserves: true,
     reserveNote:
@@ -489,65 +491,75 @@ const List<Mission> fowMissions = [
     id: 'contact',
     name: 'Contact',
     type: MissionType.attackDefend,
-    tagline: 'The front line is fluid — push through before they consolidate.',
+    tagline: 'Advance guards probe the enemy line.',
     overview:
-        'Both forces have 40% in Reserve. The Attacker\'s reserves are Immediate; '
-        'the Defender\'s are Scattered Delayed. Four Objectives cover both halves of the table. '
-        'Win by capturing an Objective in the opponent\'s half.',
+        'Defender picks a long table edge. Both players place one Objective in each half of the table. '
+        'The Attacker\'s reserves are Scattered Immediate; the Defender\'s are Scattered Delayed. '
+        'The Attacker goes first (Meeting Engagement). Both may use Spearhead.',
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
-      'Defender places two Objectives in the Attacker\'s half (at least 16"/40cm from centre, 8"/20cm from short edges).',
-      'Attacker places two Objectives in the Defender\'s half (at least 12"/30cm from centre, 8"/20cm from short edges).',
+      'Defender picks a long table edge. The Attacker attacks from the opposite edge.',
+      'Both players, starting with the Attacker, place one Objective in their own table half '
+          'at least 8"/20cm from the long centre line and all table edges.',
+      'Both players, starting with the Attacker, place one Objective in the opponent\'s table half '
+          'at least 16"/40cm from the long centre line and at least 8"/20cm from the short table edges.',
     ],
     deploymentRules: [
       DeploymentRule(
-        title: 'Attacker — Immediate Reserves',
+        title: 'Attacker — Scattered Immediate Reserves',
         description:
-            'Attacker deploys up to 60% of their force in their half at least 12"/30cm from the centre line. '
-            'Remainder are Immediate Reserves from the Attacker\'s long table edge (roll from Turn 1 on 5+).',
+            'Attacker deploys up to 60% of their force in their own table half at least 12"/30cm from the long centre line. '
+            'Holds the rest in Scattered Immediate Reserve (roll from Turn 1 on 5+). '
+            'When each unit arrives, roll to determine which table edge or corner it arrives from.',
       ),
       DeploymentRule(
         title: 'Defender — Scattered Delayed Reserves',
         description:
-            'Defender deploys up to 60% of their force in their half at least 8"/20cm from the centre line. '
-            'Remainder are Scattered Delayed Reserves (arrive from Turn 3 on 5+, from a random table edge).',
+            'Defender deploys up to 60% of their force in their own table half at least 12"/30cm from the long centre line. '
+            'Holds the rest in Scattered Delayed Reserve (roll from Turn 3 on 5+). '
+            'When each unit arrives, roll to determine which table edge or corner it arrives from. '
+            'Defender may hold one Unit in Ambush.',
       ),
       DeploymentRule(
-        title: 'Ambush & Foxholes',
-        description:
-            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
       ),
     ],
     startingConditions: [
-      'The Attacker has the first turn.',
-      'Attacker Immediate Reserves arrive from Attacker\'s long table edge from Turn 1 on 5+.',
-      'Defender Scattered Delayed Reserves arrive from a random table edge from Turn 3 on 5+.',
-      'If 3+ dice but no 5+ scored, one unit automatically arrives.',
+      'The Attacker has the first turn. As a Meeting Engagement, the Attacker shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+      'Attacker Scattered Immediate Reserves: roll from Turn 1 on 5+; roll for arrival edge/corner.',
+      'Defender Scattered Delayed Reserves: roll from Turn 3 on 5+; roll for arrival edge/corner.',
+      'If 3+ dice but no 5+, one unit automatically arrives.',
     ],
     firstTurnRules: [
+      'Meeting Engagement applies to the Attacker\'s first turn only.',
       'Defender may place Ambush unit at start of their first turn.',
-      'Attacker starts rolling for Immediate Reserves immediately from Turn 1.',
+      'Attacker starts rolling for Scattered Immediate Reserves from Turn 1.',
+      'Defender starts rolling for Scattered Delayed Reserves from Turn 3.',
     ],
     victoryConditions: [
       VictoryCondition(
         title: 'Capture an Objective',
         description:
-            'A player wins if they start their turn with a Tank, Infantry, or Gun team '
-            'within 4"/10cm of an Objective on the opponent\'s side of the table, '
-            'and end it with no opposing Tank, Infantry, or Gun teams within 4"/10cm of that Objective.',
+            'A player wins if they end their turn Holding an Objective on the opponent\'s side of the table '
+            '(no opposing Tank, Infantry, or Gun teams within 4"/10cm of it at end of turn).',
       ),
     ],
     specialRules: [
-      'Attacker: Immediate Reserves from Turn 1 on 5+ (own long edge).',
-      'Defender: Scattered Delayed Reserves from Turn 3 on 5+ (random edge).',
+      'Long edge orientation — Defender picks a long table edge.',
+      'Both players place 1 Objective in own half AND 1 in opponent\'s half (4 total).',
+      'Attacker goes first — Meeting Engagement applies to Attacker\'s first turn.',
+      'Attacker: Scattered Immediate Reserves from Turn 1 on 5+ (random edge/corner).',
+      'Defender: Scattered Delayed Reserves from Turn 3 on 5+ (random edge/corner).',
       'Defender may use Ambush (one Unit).',
-      '4 Objectives — 2 in each half.',
+      'Spearhead allowed for both players.',
+      'If 3+ dice but no 5+, one unit automatically arrives.',
     ],
     hasReserves: true,
     reserveNote:
-        'Both sides: max 60% on table (at 95 pts = 57 pts on-table max, 38 pts minimum in Reserve). '
-        'Attacker Immediate from Turn 1; Defender Scattered Delayed from Turn 3.',
+        'Both sides: max 60% on table. Attacker Scattered Immediate from Turn 1; Defender Scattered Delayed from Turn 3.',
     turnLimit: 6,
   ),
 
@@ -592,10 +604,11 @@ const List<Mission> fowMissions = [
       ),
     ],
     startingConditions: [
-      'The Attacker has the first turn.',
+      'The Attacker has the first turn. As a Meeting Engagement, the Attacker shoots as if they moved, cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
       'Defender Immediate Reserves: roll from Turn 1 on 5+, arrive within 16"/40cm of opposite corner.',
     ],
     firstTurnRules: [
+      'Meeting Engagement applies to the Attacker\'s first turn only. (Ambush units revealed on Turn 1 also fire at Moving ROF.)',
       'Defender may place Ambush unit at start of their first turn.',
       'Defender starts rolling for Immediate Reserves from Turn 1.',
     ],
@@ -618,6 +631,8 @@ const List<Mission> fowMissions = [
       'Defender has Immediate Reserves from Turn 1 on 5+.',
       'Defender may use Ambush (one Unit).',
       'Adjacent quarter deployment — not diagonal.',
+      'Meeting Engagement for Attacker\'s first turn.',
+      'Spearhead allowed for both players.',
     ],
     hasReserves: true,
     reserveNote:
@@ -638,14 +653,14 @@ const List<Mission> fowMissions = [
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
-      'The Attacker places two Objectives at least 8"/20cm from the table centre line, '
-          'at least 8"/20cm from the long table edge, and at least 28"/70cm from the short table edges.',
+      'The Attacker places two Objectives at least 8"/20cm from the long centre line and long table edge, and at least 24"/60cm from the short table edges.',
+      'Defender places one Minefield for each 25 points or part thereof in their force, anywhere outside the Attacker\'s deployment area.',
     ],
     deploymentRules: [
       DeploymentRule(
         title: 'Defender — Deep Scattered Immediate Reserves',
         description:
-            'Defender deploys up to 60% of their force in their half at least 20"/50cm from the side table edges. '
+            'Defender deploys up to 60% of their force in their table half at least 16"/40cm from the short table edges. '
             'Remainder are Deep Scattered Immediate Reserves (roll from Turn 1 on 5+, arrive at a random table edge). '
             'No more than one Tank Unit with Front armour 3+ or Aircraft Unit on table.',
       ),
@@ -690,6 +705,7 @@ const List<Mission> fowMissions = [
       'Heavy armour must be kept in Reserve.',
       'Defender may use Ambush (one Unit).',
       'Attacker may win any turn; Defender win condition activates Turn 6+.',
+      'Defender places Minefields: one per 25 pts, outside Attacker\'s deployment area.',
     ],
     hasReserves: true,
     reserveNote:
@@ -782,12 +798,12 @@ const List<Mission> fowMissions = [
     overview:
         'The Defender fights a delaying action. Starting Turn 2, the Defender must '
         'use Strategic Withdrawal to remove Units from the table. '
-        'The Defender wins at the start of their 9th turn.',
+        'The Defender wins at the start of their 7th turn.',
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
-      'The Attacker places two Objectives within 16"/40cm of the Defender\'s long table edge, '
-          'at least 16"/40cm from the side table edges.',
+      'The Attacker places two Objectives within 8"/20cm of the Defender\'s long table edge and within 20"/50cm of the short centre line.',
+      'Defender places one Minefield for each 25 points or part thereof in their force, anywhere outside the Attacker\'s deployment area.',
     ],
     deploymentRules: [
       DeploymentRule(
@@ -813,8 +829,8 @@ const List<Mission> fowMissions = [
       'Defender may place Ambush unit at start of their first turn.',
       'From Turn 2 onwards: at the start of each turn, after checking Victory Conditions, '
           'count the Defender\'s Units + Delay Counters on table. '
-          'If 6 or more: remove one Unit and its Attachments, clear all Delay Counters. '
-          'If less than 6: gain a Delay Counter (no withdrawal).',
+          'If 5 or more: remove one Unit and its Attachments, clear all Delay Counters. '
+          'If less than 5: gain a Delay Counter (no withdrawal).',
       'A Unit not in Good Spirits when withdrawn counts as Destroyed for VP purposes.',
     ],
     victoryConditions: [
@@ -828,18 +844,19 @@ const List<Mission> fowMissions = [
       VictoryCondition(
         title: 'Defender Withdraws Successfully',
         description:
-            'Defender wins at the start of their 9th turn (after checking Formation Morale).',
+            'Defender wins at the start of their 7th turn (after checking Formation Morale).',
       ),
     ],
     specialRules: [
-      'Strategic Withdrawal from Turn 2: if 6+ Units/Delay Counters → withdraw 1 Unit; else gain a Delay Counter.',
+      'Strategic Withdrawal from Turn 2: if 5+ Units/Delay Counters → withdraw 1 Unit; else gain a Delay Counter.',
       'Withdrawn Units in Good Spirits do NOT count as Destroyed for VP.',
       'Defender may use Ambush (one Unit).',
-      'Defender wins at start of Turn 9.',
+      'Defender wins at start of Turn 7.',
+      'Defender places Minefields: one per 25 pts, outside Attacker\'s deployment area.',
     ],
     hasReserves: false,
-    reserveNote: 'No reserves — both sides deploy fully. Strategic Withdrawal removes units from Turn 2.',
-    turnLimit: 9,
+    reserveNote: 'No reserves — both sides deploy fully. Strategic Withdrawal removes units from Turn 2. Defender wins at Turn 7.',
+    turnLimit: 7,
   ),
 
   // ── MISSIONS PACK (April 2023) — NEW & VARIANT MISSIONS ──────────────────
@@ -983,6 +1000,7 @@ const List<Mission> fowMissions = [
       'Both sides: Delayed Reserves from Turn 3 on 5+, arrive from long edge adjacent to own quarter.',
       'If 3+ dice but no 5+, one unit automatically arrives.',
       'Victory = Holding the Objective YOU PLACED.',
+      'Spearhead allowed for both players.',
     ],
     hasReserves: true,
     reserveNote:
@@ -1217,74 +1235,75 @@ const List<Mission> fowMissions = [
     type: MissionType.attackDefend,
     tagline: 'Cut around the flank and seize the rear.',
     overview:
-        'A variant of Spearpoint. The Attacker bypasses the main defensive line '
-        'via a flanking route. Objectives are placed near both players\' edges '
-        'in a fast-moving race to hold ground deep in enemy territory. '
-        'Victory from Turn 3.',
+        'The Defender holds a central corridor. The Attacker bypasses the main defensive line. '
+        'The Attacker goes first (Meeting Engagement). The Defender has Scattered Immediate Reserves. '
+        'Both players may use Spearhead. Victory is contested from Turn 6.',
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
-      'Defender places two Objectives up to 8"/20cm from the Attacker\'s table edge and more than 8"/20cm from the long table edges.',
-      'Attacker places two Objectives up to 16"/40cm from the opposite short table edge, at least 8"/20cm from the long table edges.',
+      'Defender picks a long table edge to defend. Deployment Area: between their table edge and the centre, '
+          '12"/30cm either side of the table centre.',
+      'Attacker chooses a short table edge to attack from.',
+      'Attacker places one Objective up to 16"/40cm from the opposite short table edge, '
+          'at least 8"/20cm from the long table edges.',
+      'Defender places one Objective up to 8"/20cm from the short centre line and '
+          'at least 8"/20cm from the long centre line.',
     ],
     deploymentRules: [
       DeploymentRule(
-        title: 'Defender Deployment',
+        title: 'Defender — Scattered Immediate Reserves',
         description:
-            'Defender\'s Deployment Area runs between their long table edge and the centre, '
-            '12"/30cm wide either side of the table centre. '
-            'Defender deploys up to 60% of their force there. No Spearhead.',
+            'Defender deploys up to 60% of their force in their Deployment Area (corridor 12"/30cm either side of table centre). '
+            'Holds the rest in Scattered Immediate Reserve (roll from Turn 1 on 5+). '
+            'When each unit arrives, roll to determine table edge or corner; from edge, enter anywhere along it in the Deployment Area; '
+            'from corner, enter within 16"/40cm of that corner. '
+            'Defender may hold one Unit in Ambush.',
       ),
       DeploymentRule(
-        title: 'Attacker Deployment',
+        title: 'Attacker — Full Deployment',
         description:
-            'Attacker deploys up to 60% of their force in their half at least 24"/60cm from the long centre line. '
-            'No Spearhead. Immediate Reserves arrive from the Attacker\'s short table edge.',
+            'Attacker deploys all Units in their own table half at least 24"/60cm from the long centre line.',
       ),
       DeploymentRule(
-        title: 'Immediate Reserves (Attacker)',
-        description: 'Attacker rolls from Turn 1 on 5+ for Immediate Reserves, arriving from their short table edge.',
-      ),
-      DeploymentRule(
-        title: 'Scattered Delayed Reserves (Defender)',
-        description:
-            'Defender\'s remaining 40% are Scattered Delayed Reserves, rolling from Turn 3 on 5+. '
-            'Arrive within 16"/40cm of indicated corners or along Defender deployment edge.',
-      ),
-      DeploymentRule(
-        title: 'Ambush & Foxholes',
-        description:
-            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
       ),
     ],
     startingConditions: [
-      'The Attacker has the first turn (Meeting Engagement — Attacker counts as having moved).',
-      'Neither player may use the Spearhead rule.',
-      'Attacker rolls for Immediate Reserves from Turn 1.',
-      'Defender rolls for Scattered Delayed Reserves from Turn 3.',
+      'The Attacker has the first turn. As a Meeting Engagement, the Attacker shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+      'Defender Scattered Immediate Reserves: roll from Turn 1 on 5+; roll to determine arrival edge/corner.',
     ],
     firstTurnRules: [
-      'Meeting Engagement (Attacker): counts as moved, no Bombardments or Aircraft on Turn 1.',
-      'Defender may place Ambush at start of their first turn.',
+      'Meeting Engagement applies to the Attacker\'s first turn only.',
+      'Defender may place Ambush unit at start of their first turn.',
+      'Defender starts rolling for Scattered Immediate Reserves from Turn 1.',
     ],
     victoryConditions: [
       VictoryCondition(
-        title: 'Hold Your Own Objective (from Turn 3)',
+        title: 'Attacker Breaks Through (Turn 6+)',
         description:
-            'A player wins if they end their turn on or after Turn 3 Holding an Objective they placed.',
+            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+      VictoryCondition(
+        title: 'Defender Seals the Corridor (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack '
+            '(no Attacking Tank, Infantry, or Gun teams within 8"/20cm of any Objective).',
       ),
     ],
     specialRules: [
-      'No Spearhead for either player.',
-      'Meeting Engagement for Attacker\'s first turn.',
-      'Victory condition active from Turn 3.',
-      'Attacker: Immediate Reserves from Turn 1 on 5+ (own short edge).',
-      'Defender: Scattered Delayed Reserves from Turn 3 on 5+ (random corner/edge).',
+      'Defender picks LONG edge; deploys in central corridor 12"/30cm either side of table centre.',
+      'Attacker attacks from SHORT edge — Meeting Engagement applies to Attacker\'s first turn.',
+      'Defender: Scattered Immediate Reserves from Turn 1 on 5+ (random edge/corner).',
       'Defender may use Ambush (one Unit).',
+      'Spearhead allowed for both players.',
+      'Victory conditions check from Turn 6 onwards.',
+      'If 3+ dice but no 5+, one unit automatically arrives.',
     ],
     hasReserves: true,
     reserveNote:
-        'Both sides: max 60% on table. Attacker Immediate from Turn 1; Defender Scattered Delayed from Turn 3.',
+        'Defender: max 60% on table. Scattered Immediate Reserves from Turn 1 on 5+.',
     turnLimit: 6,
   ),
 
@@ -1382,7 +1401,7 @@ const List<Mission> fowMissions = [
     defenderRole: 'Defender',
     objectiveSetup: [
       'The Defender picks a long table edge to defend from. The Attacker attacks from the opposite side.',
-      'The Attacker places two Objectives within 4"/10cm of the short centre line, '
+      'The Attacker places two Objectives within 6"/15cm of the short centre line, '
           'in the Defender\'s table half, at least 8"/20cm from the long table edge.',
       'The Defender may place one Minefield for each 25 points or part thereof in their force, '
           'anywhere outside the Attacker\'s deployment area.',
@@ -1391,7 +1410,7 @@ const List<Mission> fowMissions = [
       DeploymentRule(
         title: 'Defender — Deep Immediate Reserves',
         description:
-            'Defender deploys up to 60% of their force within 12"/30cm of the short centre line, '
+            'Defender deploys up to 60% of their force within 14"/35cm of the short centre line, '
             'either in their table half or within 4"/10cm of the long centre line. '
             'Holds the rest in Deep Immediate Reserve. '
             'No more than one Battle Tank Unit or Aircraft Unit may be deployed on table; '
@@ -1402,7 +1421,7 @@ const List<Mission> fowMissions = [
       DeploymentRule(
         title: 'Attacker — Short Edge Deployment',
         description:
-            'Attacker deploys all Units within 8"/20cm of either short table edge. '
+            'Attacker deploys all Units within 6"/15cm of either short table edge. '
             'May split force between both short edges.',
       ),
       DeploymentRule(
@@ -1436,9 +1455,9 @@ const List<Mission> fowMissions = [
     ],
     specialRules: [
       'Long edge orientation — Defender picks a long table edge.',
-      'Attacker places Objectives within 4"/10cm of short centre line, in Defender\'s half, at least 8"/20cm from long edge.',
-      'Attacker deploys within 8"/20cm of EITHER short table edge (may split between both ends).',
-      'Defender deploys within 12"/30cm of short centre line (own half or within 4"/10cm of long centre).',
+      'Attacker places Objectives within 6"/15cm of short centre line, in Defender\'s half, at least 8"/20cm from long edge.',
+      'Attacker deploys within 6"/15cm of EITHER short table edge (may split between both ends).',
+      'Defender deploys within 14"/35cm of short centre line (own half or within 4"/10cm of long centre).',
       'Defender: Deep Immediate Reserves from Turn 1 on 5+; arrive along Defender\'s long edge (not within 16"/40cm of short edges).',
       'Defender: no more than one Battle Tank Unit or Aircraft Unit on table at start.',
       'Defender places Minefields: one per 25 pts, outside Attacker\'s deployment area.',
@@ -1469,10 +1488,10 @@ const List<Mission> fowMissions = [
     ],
     deploymentRules: [
       DeploymentRule(
-        title: 'Defender — Immediate Reserves',
+        title: 'Defender — Deep Immediate Reserves',
         description:
             'Defender deploys up to 60% of their force in their table half at least 8"/20cm from the short centre line. '
-            'Holds the rest in Immediate Reserve. '
+            'Holds the rest in Immediate Reserve. Deep reserve limits apply: no more than one Battle Tank Unit or Aircraft Unit may be deployed on table. '
             'Reserves arrive from the Attacking player\'s short table edge (roll from Turn 1 on 5+). '
             'Defender may hold one Unit in Ambush.',
       ),
@@ -1489,11 +1508,11 @@ const List<Mission> fowMissions = [
     ],
     startingConditions: [
       'The Defender has the first turn.',
-      'Defender Immediate Reserves: roll from Turn 1 on 5+, arrive from the Attacker\'s short table edge.',
+      'Defender Deep Immediate Reserves: roll from Turn 1 on 5+, arrive from the Attacker\'s short table edge.',
     ],
     firstTurnRules: [
       'Defender may place Ambush unit at start of their first turn.',
-      'Defender begins rolling for Immediate Reserves from Turn 1.',
+      'Defender begins rolling for Deep Immediate Reserves from Turn 1.',
     ],
     victoryConditions: [
       VictoryCondition(
@@ -1513,13 +1532,15 @@ const List<Mission> fowMissions = [
       'Short edge orientation — Defender picks a short table edge.',
       'Defender goes FIRST.',
       'Both Objectives placed in Defender\'s half.',
-      'Defender Immediate Reserves arrive from the ATTACKER\'S short table edge (from Turn 1 on 5+).',
+      'Defender Deep Immediate Reserves arrive from the ATTACKER\'S short table edge (from Turn 1 on 5+).',
+      'Deep reserve limits: no more than one Battle Tank Unit or Aircraft Unit on table.',
       'Defender may use Ambush (one Unit).',
       'Attacker may win any turn; Defender win condition activates Turn 6+.',
+      'Spearhead allowed for both players.',
     ],
     hasReserves: true,
     reserveNote:
-        'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+, arriving from the Attacker\'s short table edge.',
+        'Defender: max 60% on table (heavy armour restricted). Deep Immediate Reserves from Turn 1 on 5+, arriving from the Attacker\'s short table edge.',
     turnLimit: 6,
   ),
 
@@ -1531,7 +1552,7 @@ const List<Mission> fowMissions = [
     overview:
         'The Defender picks a short table edge. Both players place one Objective each in the Defender\'s half. '
         'The Attacker deploys in their half at least 16"/40cm from the short centre line. '
-        'The Defender has Deep Scattered Delayed Reserves. The Attacker strikes first.',
+        'The Defender has Deep Scattered Immediate Reserves. The Attacker strikes first.',
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
@@ -1543,10 +1564,10 @@ const List<Mission> fowMissions = [
     ],
     deploymentRules: [
       DeploymentRule(
-        title: 'Defender — Deep Scattered Delayed Reserves',
+        title: 'Defender — Deep Scattered Immediate Reserves',
         description:
             'Defender deploys up to 60% of their force in their table half. '
-            'Holds the rest in Deep Scattered Delayed Reserve (rolls from Turn 3 on 5+). '
+            'Holds the rest in Deep Scattered Immediate Reserve (rolls from Turn 1 on 5+). '
             'No more than one Battle Tank Unit or Aircraft Unit may be deployed on table; '
             'all remaining Units of those types must be held in Reserve. '
             'The Defender rolls to determine from which table edge each Reserve Unit arrives, '
@@ -1565,12 +1586,12 @@ const List<Mission> fowMissions = [
     ],
     startingConditions: [
       'The Attacker has the first turn.',
-      'Defender Deep Scattered Delayed Reserves: roll from Turn 3 on 5+; arrive at random table edge in Defender\'s half.',
+      'Defender Deep Scattered Immediate Reserves: roll from Turn 1 on 5+; arrive at random table edge in Defender\'s half.',
       'No more than one Battle Tank Unit or Aircraft Unit on table for Defender at start.',
     ],
     firstTurnRules: [
       'Defender may place Ambush unit at start of their first turn.',
-      'Defender begins rolling for Deep Scattered Delayed Reserves from Turn 3.',
+      'Defender begins rolling for Deep Scattered Immediate Reserves from Turn 1.',
     ],
     victoryConditions: [
       VictoryCondition(
@@ -1589,7 +1610,7 @@ const List<Mission> fowMissions = [
     specialRules: [
       'Short edge orientation — Defender picks a short table edge.',
       'Both Objectives placed in Defender\'s half.',
-      'Defender: Deep Scattered Delayed Reserves from Turn 3 on 5+ (random table edge, Defender\'s half only).',
+      'Defender: Deep Scattered Immediate Reserves from Turn 1 on 5+ (random table edge, Defender\'s half only).',
       'Defender: no more than one Battle Tank Unit or Aircraft Unit on table at start.',
       'Defender places Minefields: one per 25 pts, outside Attacker\'s deployment area.',
       'Defender may use Ambush (one Unit).',
@@ -1597,7 +1618,7 @@ const List<Mission> fowMissions = [
     ],
     hasReserves: true,
     reserveNote:
-        'Defender: max 60% on table (heavy armour/aircraft restricted). Deep Scattered Delayed Reserves from Turn 3 on 5+.',
+        'Defender: max 60% on table (heavy armour/aircraft restricted). Deep Scattered Immediate Reserves from Turn 1 on 5+.',
     turnLimit: 6,
   ),
 
@@ -1715,7 +1736,7 @@ const List<Mission> fowMissions = [
         title: 'Attacker — Full Deployment',
         description:
             'Attacker deploys all Units in their table half at least 8"/20cm from the long centre line '
-            'and 20"/50cm from the short table edges.',
+            'and within 16"/40cm of the short centre line.',
       ),
       DeploymentRule(
         title: 'Infantry & Guns in Foxholes',
@@ -1748,7 +1769,7 @@ const List<Mission> fowMissions = [
     specialRules: [
       'Long edge orientation — Defender picks a long table edge.',
       'Objectives at least 16"/40cm from long centre line (in Defender\'s half).',
-      'Attacker deploys at least 8"/20cm from long centre AND 20"/50cm from short edges.',
+      'Attacker deploys at least 8"/20cm from long centre AND within 16"/40cm of short centre line.',
       'Defender deploys in their half at least 8"/20cm from long centre, '
           'OR in Attacker\'s half within 8"/20cm of short edges.',
       'Defender: Deep Scattered Immediate Reserves from Turn 1 on 5+ (random table edge).',
@@ -1850,35 +1871,35 @@ const List<Mission> fowMissions = [
     type: MissionType.attackDefend,
     tagline: 'The flanks are turning — hold the centre.',
     overview:
-        'The Defender picks a table quarter. The Attacker attacks from the opposite long table edge. '
-        'The No-Man\'s Land quarter is diagonally opposite the Defender. '
-        'Objectives lie in the Defender\'s or No-Man\'s Land quarter. '
-        'The Defender has Immediate Reserves but may not use Spearhead.',
+        'The Defender picks a table quarter. The Attacker attacks from the opposite quarter with Immediate Reserves and Spearhead. '
+        'The Defender holds No-Man\'s Land with Deep Delayed Reserves but may not use Spearhead. '
+        'Objectives lie in the Defender\'s or No-Man\'s Land quarter.',
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
       'The Defender picks a table quarter to defend.',
-      'The Attacker attacks from the opposite long table edge.',
-      'The Attacker places two Objectives in the Defender\'s table quarter or in the No-Man\'s Land table quarter '
-          '(the quarter diagonally opposite the Defender\'s quarter). '
-          'Objectives must be at least 8"/20cm from the long centre line and all table edges, '
-          'and at least 32"/80cm from the short table edge in the No-Man\'s Land quarter.',
+      'The Attacker attacks from the opposite table quarter.',
+      'The Attacker places two Objectives in the Defender\'s table half, '
+          'at least 4"/10cm from the long centre line, at least 8"/20cm from all table edges, '
+          'and at least 32"/80cm from the short table edge opposite the Defender\'s table quarter.',
     ],
     deploymentRules: [
       DeploymentRule(
-        title: 'Defender — Immediate Reserves (No Spearhead)',
+        title: 'Defender — Deep Delayed Reserves (No Spearhead)',
         description:
             'Defender deploys up to 60% of their force in their table quarter or in the No-Man\'s Land table quarter, '
             'at least 32"/80cm from the short table edge. '
-            'Holds the rest in Immediate Reserve, arriving within 16"/40cm of the Defender\'s table corner (roll from Turn 1 on 5+). '
+            'Holds the rest in Deep Delayed Reserve, arriving within 16"/40cm of their table corner (roll from Turn 3 on 5+). '
+            'Deep reserve limits apply: no more than one Battle Tank Unit or Aircraft Unit on table. '
             'The Defending player may not use the Spearhead rule. '
             'Defender may hold one Unit in Ambush.',
       ),
       DeploymentRule(
-        title: 'Attacker — Full Deployment',
+        title: 'Attacker — Immediate Reserves (Spearhead)',
         description:
-            'Attacker deploys all Units in their table half at least 16"/40cm from the long centre line, '
-            'or within 8"/20cm of the short table edge opposite the Defender\'s table quarter.',
+            'Attacker deploys up to 60% of their force in their table quarter within 8"/20cm of a table edge. '
+            'Holds the rest in Immediate Reserve, arriving from their short table edge (roll from Turn 1 on 5+). '
+            'The Attacker may use Spearhead.',
       ),
       DeploymentRule(
         title: 'Infantry & Guns in Foxholes',
@@ -1887,19 +1908,21 @@ const List<Mission> fowMissions = [
     ],
     startingConditions: [
       'The Attacker has the first turn.',
-      'Defender Immediate Reserves: roll from Turn 1 on 5+, arrive within 16"/40cm of Defender\'s table corner.',
+      'Attacker Immediate Reserves: roll from Turn 1 on 5+, arrive from the short table edge opposite the Defender\'s deployment area.',
+      'Defender Deep Delayed Reserves: roll from Turn 3 on 5+, arrive within 16"/40cm of Defender\'s table corner.',
       'No-Man\'s Land is the quarter diagonally opposite the Defender\'s quarter.',
     ],
     firstTurnRules: [
       'Defender may place Ambush unit at start of their first turn.',
-      'Defender begins rolling for Immediate Reserves from Turn 1.',
+      'Attacker begins rolling for Immediate Reserves from Turn 1.',
+      'Defender begins rolling for Deep Delayed Reserves from Turn 3.',
     ],
     victoryConditions: [
       VictoryCondition(
-        title: 'Attacker Holds an Objective (Turn 6+)',
+        title: 'Attacker Holds an Objective',
         description:
-            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective '
-            '(no Defending Tank, Infantry, or Gun teams within 4"/10cm of it).',
+            'Attacker wins if they end their turn Holding an Objective '
+            '(no Defending Tank, Infantry, or Gun teams within 4"/10cm of it). Can win any turn.',
       ),
       VictoryCondition(
         title: 'Defender Repels the Attack (Turn 6+)',
@@ -1909,18 +1932,19 @@ const List<Mission> fowMissions = [
       ),
     ],
     specialRules: [
-      'Quarter deployment — Defender picks a table quarter; Attacker attacks from opposite LONG edge.',
+      'Quarter deployment — Defender picks a table quarter; Attacker attacks from opposite quarter.',
       'No-Man\'s Land = the quarter diagonally opposite the Defender\'s quarter.',
-      'Objectives in Defender\'s OR No-Man\'s Land quarter, at least 32"/80cm from the short table edge in No-Man\'s Land.',
-      'Defender deploys in own quarter OR No-Man\'s Land quarter (at least 32"/80cm from short edge).',
-      'Defender Immediate Reserves from Turn 1 on 5+ (within 16"/40cm of Defender\'s corner).',
-      'No Spearhead for Defender only.',
+      'Objectives in Defender\'s half, at least 32"/80cm from the short table edge in No-Man\'s Land.',
+      'Attacker: Immediate Reserves from Turn 1 on 5+ (own short edge). Spearhead allowed.',
+      'Defender: Deep Delayed Reserves from Turn 3 on 5+ (own corner). No Spearhead.',
+      'Deep reserve limits: no more than one Battle Tank Unit or Aircraft Unit on table.',
       'Defender may use Ambush (one Unit).',
-      'Victory conditions check from Turn 6 onwards.',
+      'Attacker may win any turn; Defender win condition activates Turn 6+.',
     ],
     hasReserves: true,
     reserveNote:
-        'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+, arrive within 16"/40cm of Defender\'s corner.',
+        'Attacker: max 60% on table. Immediate Reserves from Turn 1 on 5+, arrive from own short edge. '
+        'Defender: max 60% on table. Deep Delayed Reserves from Turn 3 on 5+, arrive at own corner.',
     turnLimit: 6,
   ),
 
@@ -2008,35 +2032,34 @@ const List<Mission> fowMissions = [
   Mission(
     id: 'valley_of_death',
     name: 'Valley of Death',
-    type: MissionType.manoeuvre,
+    type: MissionType.attackDefend,
     tagline: 'Cross the open ground — or die trying.',
     overview:
-        'Short edge orientation. The Defender deploys within 8"/20cm of either long table edge. '
-        'The Attacker deploys in the central zone at least 12"/30cm from the long edges and 16"/40cm from the short centre. '
-        'The Attacker goes first (Meeting Engagement). Objectives are at least 16"/40cm from long centre and long edge.',
+        'The Defender picks a short table edge and deploys along both long table edges. '
+        'The Attacker deploys in the central zone. The Defender has Scattered Immediate Reserves. '
+        'Both players may use Spearhead. Victory checks begin from Turn 6.',
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
       'The Defender picks a short table edge to defend from. The Attacker attacks from the opposite end.',
-      'The Attacker places two Objectives in the Defender\'s table half. '
-          'Objectives must be at least 16"/40cm from the long centre line and the long table edge, '
-          'and at least 8"/20cm from the short table edges.',
+      'The Attacker places two Objectives in the Defender\'s table half, '
+          'at least 8"/20cm from the long centre line and at least 16"/40cm from all table edges.',
     ],
     deploymentRules: [
       DeploymentRule(
-        title: 'Defender — Scattered Delayed Reserves',
+        title: 'Defender — Scattered Immediate Reserves',
         description:
             'Defender deploys up to 60% of their force in their table half within 8"/20cm of either long table edge. '
-            'May split force between both sides of the table. '
-            'Holds the rest in Scattered Delayed Reserve (roll from Turn 3 on 5+). '
-            'When each unit arrives, the Defender rolls to determine from which long table edge (in their table half) it arrives.',
+            'May split force between both long edges. '
+            'Holds the rest in Scattered Immediate Reserve (roll from Turn 1 on 5+). '
+            'When each unit arrives, roll to determine which long table edge it arrives from (in Defender\'s half). '
+            'Defender may hold one Unit in Ambush.',
       ),
       DeploymentRule(
-        title: 'Attacker — Immediate Reserves',
+        title: 'Attacker — Full Deployment',
         description:
-            'Attacker deploys up to 60% of their force in their own table half, '
-            'at least 12"/30cm from the long table edges and 16"/40cm from the short centre line. '
-            'Holds the rest in Immediate Reserve, arriving from their short table edge (roll from Turn 1 on 5+).',
+            'Attacker deploys all Units in their own table half, '
+            'at least 24"/60cm from the short centre line and at least 8"/20cm from the long table edges.',
       ),
       DeploymentRule(
         title: 'Infantry & Guns in Foxholes',
@@ -2044,15 +2067,13 @@ const List<Mission> fowMissions = [
       ),
     ],
     startingConditions: [
-      'The Attacker has the first turn. As this is a Meeting Engagement, the Attacker shoots as if they moved, '
-          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
-      'Attacker Immediate Reserves: roll from Turn 1 on 5+, arrive from Attacker\'s short table edge.',
-      'Defender Scattered Delayed Reserves: roll from Turn 3 on 5+; roll to determine which long table edge Unit arrives from.',
+      'The Attacker has the first turn.',
+      'Defender Scattered Immediate Reserves: roll from Turn 1 on 5+; roll to determine which long table edge Unit arrives from (Defender\'s half).',
+      'If 3+ dice but no 5+, one unit automatically arrives.',
     ],
     firstTurnRules: [
-      'Meeting Engagement applies to the Attacker\'s first turn only.',
-      'Attacker begins rolling for Immediate Reserves from Turn 1.',
-      'Defender begins rolling for Scattered Delayed Reserves from Turn 3.',
+      'Defender may place Ambush unit at start of their first turn.',
+      'Defender begins rolling for Scattered Immediate Reserves from Turn 1.',
     ],
     victoryConditions: [
       VictoryCondition(
@@ -2069,19 +2090,18 @@ const List<Mission> fowMissions = [
       ),
     ],
     specialRules: [
-      'Short edge orientation — Defender picks a short table edge.',
-      'Defender deploys within 8"/20cm of EITHER long table edge (flanking positions, may split).',
-      'Attacker deploys at least 12"/30cm from long edges AND 16"/40cm from short centre line.',
-      'Objectives: at least 16"/40cm from long centre line AND long table edge.',
-      'Attacker goes first — Meeting Engagement applies to Attacker\'s first turn.',
-      'Attacker Immediate Reserves from Turn 1 on 5+ (own short edge).',
-      'Defender Scattered Delayed Reserves from Turn 3 on 5+ (random long edge, in Defender\'s half).',
+      'Short edge orientation — Defender picks a short table edge. Attacker attacks from opposite.',
+      'Defender deploys within 8"/20cm of EITHER long table edge (may split between both sides).',
+      'Attacker deploys at least 24"/60cm from short centre AND 8"/20cm from long table edges.',
+      'Objectives: at least 8"/20cm from long centre line AND 16"/40cm from all table edges.',
+      'Defender: Scattered Immediate Reserves from Turn 1 on 5+ (random long edge, Defender\'s half).',
+      'Defender may use Ambush (one Unit).',
+      'Spearhead allowed for both players.',
       'Victory conditions check from Turn 6 onwards.',
     ],
     hasReserves: true,
     reserveNote:
-        'Attacker: max 60% on table. Immediate Reserves from Turn 1 on 5+, arrive from own short edge. '
-        'Defender: max 60% on table. Scattered Delayed Reserves from Turn 3 on 5+.',
+        'Defender: max 60% on table. Scattered Immediate Reserves from Turn 1 on 5+, arrive from random long edge (Defender\'s half).',
     turnLimit: 6,
   ),
 
@@ -2179,25 +2199,31 @@ const List<Mission> fowMissions = [
     type: MissionType.attackDefend,
     tagline: 'Nowhere to run — fight to the last.',
     overview:
-        'The Defender is pushed into a table quarter with their back to the corner. '
-        'The Attacker strikes from the opposite short table edge with two objectives '
-        'placed in the Defender\'s corner. A brutal close-quarters engagement.',
+        'The Defender is pushed into a table quarter. The Attacker strikes with Immediate Reserves and Spearhead. '
+        'The Defender holds the corner with Deep Delayed Reserves arriving from No-Man\'s Land. '
+        'Both players may use Spearhead.',
     attackerRole: 'Attacker',
     defenderRole: 'Defender',
     objectiveSetup: [
-      'The Attacker places two Objectives in the Defender\'s table quarter at least 4"/10cm from both centre lines and 12"/30cm from all table edges.',
+      'Defender picks a table quarter to defend.',
+      'Attacker attacks from the opposite short table edge.',
+      'Attacker places two Objectives in the Defender\'s table quarter, '
+          'at least 4"/10cm from the long centre line and at least 8"/20cm from all table edges.',
     ],
     deploymentRules: [
       DeploymentRule(
-        title: 'Defender — Corner Deployment',
+        title: 'Defender — Deep Delayed Reserves (Corner)',
         description:
-            'Defender deploys up to 60% in their table quarter or up to 4"/10cm into the Attacker\'s half. '
-            'Remainder are Immediate Reserves arriving within 16"/40cm of the Defender\'s corner.',
+            'Defender deploys up to 60% of their force in their table quarter or up to 8"/20cm into the adjacent quarter. '
+            'Holds the rest in Deep Delayed Reserve, arriving within 16"/40cm of the No-Man\'s Land table corner (roll from Turn 3 on 5+). '
+            'Deep reserve limits apply: no more than one Battle Tank Unit or Aircraft Unit on table. '
+            'Defender may hold one Unit in Ambush.',
       ),
       DeploymentRule(
-        title: 'Attacker — Full Deployment',
+        title: 'Attacker — Immediate Reserves',
         description:
-            'Attacker deploys all Units in their half at least 20"/50cm from the short centre line.',
+            'Attacker deploys up to 60% of their force within 12"/30cm of their short table edge. '
+            'Holds the rest in Immediate Reserve, arriving from their short table edge (roll from Turn 1 on 5+).',
       ),
       DeploymentRule(
         title: 'Defender Minefields',
@@ -2206,24 +2232,25 @@ const List<Mission> fowMissions = [
             'anywhere outside the Attacker\'s deployment area.',
       ),
       DeploymentRule(
-        title: 'Ambush & Foxholes',
-        description:
-            'Defender may hold one Unit in Ambush. All Infantry and Gun Teams start in Foxholes.',
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start in Foxholes.',
       ),
     ],
     startingConditions: [
       'The Attacker has the first turn.',
-      'Defender Immediate Reserves roll from Turn 1, arriving within 16"/40cm of their corner.',
+      'Attacker Immediate Reserves: roll from Turn 1 on 5+, arrive from Attacker\'s short table edge.',
+      'Defender Deep Delayed Reserves: roll from Turn 3 on 5+, arrive within 16"/40cm of the No-Man\'s Land corner.',
     ],
     firstTurnRules: [
       'Defender may place Ambush at start of their first turn.',
-      'Defender rolls for Immediate Reserves from Turn 1.',
+      'Attacker rolls for Immediate Reserves from Turn 1.',
+      'Defender rolls for Deep Delayed Reserves from Turn 3.',
     ],
     victoryConditions: [
       VictoryCondition(
-        title: 'Attacker Captures an Objective (Turn 6+)',
+        title: 'Attacker Captures an Objective',
         description:
-            'Attacker wins if they end their turn on or after Turn 6 Holding an Objective.',
+            'Attacker wins if they end their turn Holding an Objective. Can win any turn.',
       ),
       VictoryCondition(
         title: 'Defender Holds the Corner (Turn 6+)',
@@ -2232,15 +2259,18 @@ const List<Mission> fowMissions = [
       ),
     ],
     specialRules: [
-      'Defender confined to one table quarter.',
+      'Defender confined to table quarter (or up to 8"/20cm into adjacent quarter).',
       'Defender Minefields: one per 25 pts outside Attacker\'s zone.',
-      'Defender: Immediate Reserves from Turn 1 on 5+ (own corner, within 16"/40cm).',
+      'Attacker: Immediate Reserves from Turn 1 on 5+ (own short edge).',
+      'Defender: Deep Delayed Reserves from Turn 3 on 5+ (No-Man\'s Land corner). No more than one Battle Tank/Aircraft on table.',
+      'Spearhead allowed for both players.',
       'Defender may use Ambush (one Unit).',
-      'Victory from Turn 6.',
+      'Attacker may win any turn; Defender win condition activates Turn 6+.',
     ],
     hasReserves: true,
     reserveNote:
-        'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+, within 16"/40cm of Defender\'s corner.',
+        'Attacker: max 60% on table. Immediate Reserves from Turn 1 on 5+, arrive from own short edge. '
+        'Defender: max 60% on table. Deep Delayed Reserves from Turn 3 on 5+, arrive at No-Man\'s Land corner.',
     turnLimit: 6,
   ),
 
@@ -2315,6 +2345,1188 @@ const List<Mission> fowMissions = [
     hasReserves: true,
     reserveNote:
         'Defender: max 60% on table. Immediate Reserves from Turn 1 on 5+, within 16"/40cm of opposite corner.',
+    turnLimit: 6,
+  ),
+
+  // ── 2026 MISSIONS PACK — NEW MISSIONS ────────────────────────────────────
+
+  Mission(
+    id: 'attack_or_die',
+    name: 'Attack or Die',
+    type: MissionType.manoeuvre,
+    tagline: 'Both sides must attack — hesitation means defeat.',
+    overview:
+        'Long edge orientation. Each player\'s Objectives are placed in the opponent\'s table quarter. '
+        'Both players lay Minefields. The battle is a race to capture objectives deep in enemy territory.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll a die; highest scorer is the Attacker, picks a long table edge. Defender takes the opposite.',
+      'Defender picks a table quarter in the Attacker\'s table half for their Objectives. '
+          'Attacker\'s Objectives are in the opposite table quarter.',
+      'Both players, starting with the Attacker, place two Objectives within their Objective table quarter, '
+          'more than 12"/30cm from the long centre line and more than 8"/20cm from the short table edges.',
+      'Both players, starting with the Attacker, place one Minefield for each 50 points or part thereof '
+          'anywhere outside the opponent\'s deployment area.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit in their own table half '
+            'more than 8"/20cm from the long centre line until all are deployed.',
+      ),
+      DeploymentRule(
+        title: 'Full Deployment — No Reserves',
+        description: 'Both players deploy their entire force. There are no reserves.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll a die — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Long edge orientation.',
+      'Objectives placed in opposite table quarters (opponent\'s half).',
+      'Minefields: both players, one per 50 pts, outside opponent\'s deployment area.',
+      'Meeting Engagement for the first player\'s first turn.',
+      'No reserves — full deployment.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'bite_and_hold',
+    name: 'Bite and Hold',
+    type: MissionType.manoeuvre,
+    tagline: 'Seize ground and hold it against all comers.',
+    overview:
+        'Short edge orientation. Each player\'s Objectives are placed in the opponent\'s table quarter. '
+        'Both players lay Minefields. The battle is a race to capture and hold objectives deep in enemy territory.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll a die; highest scorer is the Attacker, picks a short table edge. Defender takes the opposite.',
+      'Defender picks a table quarter in the Attacker\'s table half for their Objectives. '
+          'Attacker\'s Objectives are in the opposite table quarter.',
+      'Both players, starting with the Attacker, place two Objectives within their Objective table quarter, '
+          'more than 12"/30cm from the short centre line and more than 8"/20cm from all table edges.',
+      'Both players, starting with the Attacker, place one Minefield for each 50 points or part thereof '
+          'anywhere outside the opponent\'s deployment area.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit in their own table half '
+            'more than 8"/20cm from the short centre line until all are deployed.',
+      ),
+      DeploymentRule(
+        title: 'Full Deployment — No Reserves',
+        description: 'Both players deploy their entire force. There are no reserves.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll a die — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'Objectives placed in opposite table quarters (opponent\'s half).',
+      'Minefields: both players, one per 50 pts, outside opponent\'s deployment area.',
+      'Meeting Engagement for the first player\'s first turn.',
+      'No reserves — full deployment.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'collision',
+    name: 'Collision',
+    type: MissionType.manoeuvre,
+    tagline: 'Two forces smash into each other head-on.',
+    overview:
+        'Short edge orientation. Each player places one Objective in each half of the table. '
+        'Both sides hold Immediate Reserves arriving from their short table edge. '
+        'Both may use Spearhead. Victory is contested from Turn 6.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a short table edge. Defender takes opposite.',
+      'Starting with Attacker, each player places one Objective in their own table half, '
+          'more than 8"/20cm from the short centre line and all table edges.',
+      'Starting with Attacker, each player places one Objective in the opponent\'s table half, '
+          'more than 8"/20cm from the short centre line and all table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit within 16"/40cm of their short table edge '
+            'until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Immediate Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force. '
+            'Remainder are Immediate Reserves, arriving from their own short table edge (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Both sides begin rolling for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective (Turn 6+)',
+        description:
+            'A player wins if they end their turn on or after Turn 6 Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'Each player places 1 Objective in own half AND 1 in opponent\'s half (4 total).',
+      'Meeting Engagement for the first player\'s first turn.',
+      'Immediate Reserves (Both Players): from Turn 1 on 5+, arrive from own short edge.',
+      'Spearhead allowed for both players.',
+      'Victory conditions check from Turn 6 onwards.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Immediate Reserves from Turn 1 on 5+, arrive from own short edge.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'confrontation',
+    name: 'Confrontation',
+    type: MissionType.manoeuvre,
+    tagline: 'Forces advance to contact along the full breadth of the table.',
+    overview:
+        'Long edge orientation. Each player places one Objective in each half of the table. '
+        'Both sides hold Immediate Reserves arriving from their long table edge. '
+        'Both may use Spearhead. Victory is contested from Turn 6.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a long table edge. Defender takes opposite.',
+      'Starting with Attacker, each player places one Objective in their own table half, '
+          'more than 8"/20cm from the long centre line and all table edges.',
+      'Starting with Attacker, each player places one Objective in the opponent\'s table half, '
+          'more than 8"/20cm from the long centre line and all table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit within 8"/20cm of their long table edge '
+            'until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Immediate Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force. '
+            'Remainder are Immediate Reserves, arriving from their own long table edge (roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Both sides begin rolling for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective (Turn 6+)',
+        description:
+            'A player wins if they end their turn on or after Turn 6 Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Long edge orientation.',
+      'Each player places 1 Objective in own half AND 1 in opponent\'s half (4 total).',
+      'Meeting Engagement for the first player\'s first turn.',
+      'Immediate Reserves (Both Players): from Turn 1 on 5+, arrive from own long edge.',
+      'Spearhead allowed for both players.',
+      'Victory conditions check from Turn 6 onwards.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Immediate Reserves from Turn 1 on 5+, arrive from own long edge.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'crossed_lines',
+    name: 'Crossed Lines',
+    type: MissionType.manoeuvre,
+    tagline: 'Objectives and forces are deployed on crossed axes.',
+    overview:
+        'Short edge orientation. Each player\'s Objectives are in the opponent\'s quarter, '
+        'but each player must deploy away from their own Objective quarter. '
+        'Both players lay Minefields. A Meeting Engagement.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a short table edge. Defender takes opposite.',
+      'Defender picks a table quarter in the Attacker\'s table half for their Objectives. '
+          'Attacker\'s Objectives are in the opposite table quarter.',
+      'Both players, starting with the Attacker, place two Objectives within their Objective table quarter, '
+          'more than 12"/30cm from the table centre and more than 8"/20cm from all table edges.',
+      'Both players, starting with the Attacker, place one Minefield for each 50 points or part thereof '
+          'anywhere outside the opponent\'s deployment area.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment — Away from Own Objective Quarter',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit in their own table half '
+            'more than 12"/30cm from the table centre and more than 12"/30cm from their own Objective table quarter '
+            'until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Full Deployment — No Reserves',
+        description: 'Both players deploy their entire force. There are no reserves.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'Objectives in opposite table quarters; each player deploys away from their own Objective quarter.',
+      'Minefields: both players, one per 50 pts, outside opponent\'s deployment area.',
+      'Meeting Engagement for the first player\'s first turn.',
+      'No reserves — full deployment.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'head_to_head',
+    name: 'Head to Head',
+    type: MissionType.manoeuvre,
+    tagline: 'A straight-up fight with no quarter asked or given.',
+    overview:
+        'Short edge orientation. Both players place their two Objectives in the opponent\'s half. '
+        'Both players lay Minefields. Full deployment — no reserves. A brutal Meeting Engagement.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a short table edge. Defender takes opposite.',
+      'Both players, starting with the Attacker, place two Objectives in the opponent\'s table half, '
+          'more than 12"/30cm from the short centre line and more than 8"/20cm from all table edges.',
+      'Both players, starting with the Attacker, place one Minefield for each 50 points or part thereof '
+          'anywhere outside the opponent\'s deployment area.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit in their own table half '
+            'more than 8"/20cm from the short centre line until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Full Deployment — No Reserves',
+        description: 'Both players deploy their entire force. There are no reserves.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'Both players place ALL 4 Objectives in the opponent\'s half.',
+      'Minefields: both players, one per 50 pts, outside opponent\'s deployment area.',
+      'Meeting Engagement for the first player\'s first turn.',
+      'No reserves — full deployment.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'high_ground',
+    name: 'High Ground',
+    type: MissionType.manoeuvre,
+    tagline: 'The high ground commands the battlefield — seize it.',
+    overview:
+        'Short edge orientation. Each player places one Objective near the short centre line. '
+        'Both sides hold Scattered Immediate Reserves arriving from their own long table edges. '
+        'Both may use Spearhead. Victory is contested from Turn 6.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a short table edge. Defender takes opposite.',
+      'Both players, starting with the Attacker, place one Objective within 12"/30cm of the short centre line, '
+          'more than 8"/20cm from the long table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit within 12"/30cm of their own table edge '
+            'until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Scattered Immediate Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force. '
+            'Remainder are Scattered Immediate Reserves (roll from Turn 1 on 5+). '
+            'When each unit arrives, roll for which long table edge it enters from (in the player\'s table half).',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+      'Both sides roll for Scattered Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Both sides begin rolling for Scattered Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Hold an Objective (Turn 6+)',
+        description:
+            'A player wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'Two Objectives near the short centre line (one per player).',
+      'Meeting Engagement for the first player\'s first turn.',
+      'Scattered Immediate Reserves (Both Players): from Turn 1 on 5+, arrive from random long edge (own half).',
+      'Spearhead allowed for both players.',
+      'Victory conditions check from Turn 6 onwards.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Scattered Immediate Reserves from Turn 1 on 5+, arrive from random long edge.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'king_of_the_hill',
+    name: 'King of the Hill',
+    type: MissionType.manoeuvre,
+    tagline: 'One hill. Two armies. No compromise.',
+    overview:
+        'Long edge orientation. Each player places one Objective near the long centre line. '
+        'Both sides hold Scattered Immediate Reserves. '
+        'Both may use Spearhead. Victory is contested from Turn 6.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a long table edge. Defender takes opposite.',
+      'Both players, starting with the Attacker, place one Objective within 8"/20cm of the long centre line, '
+          'more than 8"/20cm from the short table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit within 8"/20cm of their own table edge '
+            'until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Scattered Immediate Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force. '
+            'Remainder are Scattered Immediate Reserves (roll from Turn 1 on 5+). '
+            'When each unit arrives, roll for which table edge or corner it enters from.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+      'Both sides roll for Scattered Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Both sides begin rolling for Scattered Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Hold an Objective (Turn 6+)',
+        description:
+            'A player wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+    ],
+    specialRules: [
+      'Long edge orientation.',
+      'Two Objectives near the long centre line (one per player).',
+      'Meeting Engagement for the first player\'s first turn.',
+      'Scattered Immediate Reserves (Both Players): from Turn 1 on 5+, arrive from random edge/corner.',
+      'Spearhead allowed for both players.',
+      'Victory conditions check from Turn 6 onwards.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Scattered Immediate Reserves from Turn 1 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'knife_fight',
+    name: 'Knife Fight',
+    type: MissionType.manoeuvre,
+    tagline: 'Close quarters — no room to manoeuvre.',
+    overview:
+        'Long edge orientation. Both players place their Objectives in the opponent\'s half. '
+        'Both players lay Minefields. Units deploy right up to the long centre line. '
+        'Full deployment — no reserves. A brutal close-range Meeting Engagement.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a long table edge. Defender takes opposite.',
+      'Both players, starting with the Attacker, place two Objectives in the opponent\'s table half, '
+          'more than 12"/30cm from the long centre line and more than 8"/20cm from the short table edges.',
+      'Both players, starting with the Attacker, place one Minefield for each 50 points or part thereof '
+          'anywhere outside the opponent\'s deployment area.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit in their own table half '
+            'more than 8"/20cm from the long centre line until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Full Deployment — No Reserves',
+        description: 'Both players deploy their entire force. There are no reserves.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Long edge orientation.',
+      'Both players place ALL 4 Objectives in the opponent\'s half.',
+      'Minefields: both players, one per 50 pts, outside opponent\'s deployment area.',
+      'Deploy up to 8"/20cm from the long centre line (close deployment).',
+      'Meeting Engagement for the first player\'s first turn.',
+      'No reserves — full deployment.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'locked_horns',
+    name: 'Locked Horns',
+    type: MissionType.manoeuvre,
+    tagline: 'Two forces locked in a grinding struggle for No-Man\'s Land.',
+    overview:
+        'Diagonal quarter deployment. Each player places one Objective in a No-Man\'s Land table quarter. '
+        'Both sides hold Immediate Reserves. Both may use Spearhead. Victory from Turn 6.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a table quarter. Defender takes opposite quarter.',
+      'Attacker places their Objective in the No-Man\'s Land table quarter along the same long table edge as their quarter. '
+          'Defender places their Objective in the opposite No-Man\'s Land quarter. '
+          'Both Objectives must be more than 8"/20cm from the centre lines and table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Quarters',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit in their own table quarter '
+            'more than 16"/40cm from the table centre until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Immediate Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force. '
+            'Remainder are Immediate Reserves, arriving within 16"/40cm of the table corner on the same long table edge as their quarter '
+            '(roll from Turn 1 on 5+).',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+      'Both sides roll for Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Both sides begin rolling for Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Hold an Objective (Turn 6+)',
+        description:
+            'A player wins if they end their turn on or after Turn 6 Holding an Objective.',
+      ),
+    ],
+    specialRules: [
+      'Diagonal quarter deployment — Attacker and Defender take diagonally opposite quarters.',
+      'Each Objective placed in a No-Man\'s Land quarter (the other two quarters).',
+      'Meeting Engagement for the first player\'s first turn.',
+      'Immediate Reserves (Both Players): from Turn 1 on 5+, arrive within 16"/40cm of own corner on same long edge.',
+      'Spearhead allowed for both players.',
+      'Victory conditions check from Turn 6 onwards.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Immediate Reserves from Turn 1 on 5+, arrive within 16"/40cm of own corner.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'night_patrol',
+    name: 'Night Patrol',
+    type: MissionType.manoeuvre,
+    tagline: 'Fighting blind in the darkness — only your patrol knows the ground.',
+    overview:
+        'Long edge orientation. The entire game is fought at Night. Both players lay Minefields and send out Patrols. '
+        'Objectives are near both the centre and each player\'s long table edge. '
+        'Deep Static Delayed Reserves — deployed Tanks start Bailed Out.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a long table edge. Defender takes opposite.',
+      'Both players, starting with the Attacker, place one Minefield for each 25 points or part thereof '
+          'in the opponent\'s table half more than 6"/15cm from the long centre line.',
+      'Both players roll; highest scorer chooses a short table edge for their Patrol. '
+          'The other player\'s Patrol uses the opposite short table edge.',
+      'Both players, starting with Attacker, place one Objective within 4"/10cm of the long centre line, '
+          'more than 8"/20cm from the short centre line and short table edge (in the Patrol area).',
+      'Both players, starting with Attacker, place one Objective in the opponent\'s table half, '
+          'within 12"/30cm of the long table edge and more than 8"/20cm from the short table edges.',
+      'Both players, starting with Attacker, choose an Infantry Unit as their Patrol and place Patrolling Teams '
+          'in the Patrol area (near the long centre line). Patrolling Teams do not start in Foxholes.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deep Static Delayed Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force in their own table half more than 8"/20cm from the long centre line. '
+            'Tank teams must be placed within 8"/20cm of their own long table edge. '
+            'Any Tank teams deployed on table start Bailed Out. Tank Units do not take Last Stand tests in their first turn. '
+            'Remainder are Deep Static Delayed Reserves, arriving from the player\'s long table edge (roll from Turn 3 on 5+). '
+            'Deep reserve limits apply. Transports cannot use Bring Transports Forward.',
+      ),
+      DeploymentRule(
+        title: 'Night Rules',
+        description:
+            'The entire game is fought at Night. Teams may not move faster than Terrain Dash speed; +1 to Cross number. '
+            '+1 penalty when Shooting. Roll Night Visibility Table for Line of Sight (unless target shot in previous turn). '
+            'Artillery Bombardments: +1 to Range In. No Aircraft.',
+      ),
+      DeploymentRule(
+        title: 'Patrol Rule',
+        description:
+            'Each player\'s Patrol Unit must have at least five non-Heavy-Weapon Infantry Teams. '
+            'Heavy Weapons and non-Infantry stay deployed; remaining Infantry are Patrolling Teams. '
+            'Patrolling Teams do not start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn. '
+          'Night rules apply throughout the game.',
+      'All deployed Tank teams start Bailed Out.',
+      'Both sides roll for Deep Static Delayed Reserves from Turn 3.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Night rules are in effect for the entire game.',
+      'Tank Units do not take Last Stand tests during their first turn.',
+      'Both sides begin rolling for Deep Static Delayed Reserves from Turn 3.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective in the opponent\'s Patrol area or Deployment area.',
+      ),
+    ],
+    specialRules: [
+      'Long edge orientation.',
+      'NIGHT: entire game — teams move at max Terrain Dash, +1 Shoot penalty, Night Visibility Table for LoS, no Aircraft.',
+      'Deep Static Delayed Reserves (Both Players): from Turn 3 on 5+; deployed Tanks start Bailed Out.',
+      'Minefields: both players, one per 25 pts, in opponent\'s half more than 6" from long centre.',
+      'Patrols: each player assigns one Infantry Unit; Patrolling Teams do not start in Foxholes.',
+      'Meeting Engagement for the first player\'s first turn.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Deep Static Delayed Reserves from Turn 3 on 5+. Deployed Tanks start Bailed Out.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'no_mans_land',
+    name: 'No-Man\'s Land',
+    type: MissionType.manoeuvre,
+    tagline: 'The killing ground between the lines — only the brave dare cross it.',
+    overview:
+        'Short edge orientation. The entire game is fought at Night. Both players lay Minefields and send out Patrols. '
+        'Deep Static Immediate Reserves — deployed Tanks start Bailed Out.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a short table edge. Defender takes opposite.',
+      'Both players, starting with the Attacker, place one Minefield for each 25 points or part thereof '
+          'in the opponent\'s table half more than 6"/15cm from the short centre line.',
+      'Both players roll; highest scorer chooses a long table edge for their Patrol. '
+          'The other player\'s Patrol uses the opposite long table edge.',
+      'Both players, starting with Attacker, place one Objective within 4"/10cm of the short centre line, '
+          'more than 4"/10cm from the long centre line and more than 8"/20cm from the long table edge (in Patrol area).',
+      'Both players, starting with Attacker, place one Objective in the opponent\'s table half, '
+          'within 24"/60cm of the short table edge and more than 8"/20cm from the long table edges.',
+      'Both players, starting with Attacker, choose an Infantry Unit as their Patrol and place Patrolling Teams '
+          'in the Patrol area (near the short centre line). Patrolling Teams do not start in Foxholes.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deep Static Immediate Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force in their own table half more than 8"/20cm from the short centre line. '
+            'Tank teams must be placed within 8"/20cm of their own short table edge. '
+            'Any Tank teams deployed on table start Bailed Out. Tank Units do not take Last Stand tests in their first turn. '
+            'Remainder are Deep Static Immediate Reserves, arriving from the player\'s short table edge (roll from Turn 1 on 5+). '
+            'Deep reserve limits apply. Transports cannot use Bring Transports Forward.',
+      ),
+      DeploymentRule(
+        title: 'Night Rules',
+        description:
+            'The entire game is fought at Night. Teams may not move faster than Terrain Dash speed; +1 to Cross number. '
+            '+1 penalty when Shooting. Roll Night Visibility Table for Line of Sight (unless target shot in previous turn). '
+            'Artillery Bombardments: +1 to Range In. No Aircraft.',
+      ),
+      DeploymentRule(
+        title: 'Patrol Rule',
+        description:
+            'Each player\'s Patrol Unit must have at least five non-Heavy-Weapon Infantry Teams. '
+            'Heavy Weapons and non-Infantry stay deployed; remaining Infantry are Patrolling Teams. '
+            'Patrolling Teams do not start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn. '
+          'Night rules apply throughout the game.',
+      'All deployed Tank teams start Bailed Out.',
+      'Both sides roll for Deep Static Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Night rules are in effect for the entire game.',
+      'Tank Units do not take Last Stand tests during their first turn.',
+      'Both sides begin rolling for Deep Static Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective in the opponent\'s Patrol area or Deployment area.',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'NIGHT: entire game — teams move at max Terrain Dash, +1 Shoot penalty, Night Visibility Table for LoS, no Aircraft.',
+      'Deep Static Immediate Reserves (Both Players): from Turn 1 on 5+; deployed Tanks start Bailed Out.',
+      'Minefields: both players, one per 25 pts, in opponent\'s half more than 6" from short centre.',
+      'Patrols: each player assigns one Infantry Unit; Patrolling Teams do not start in Foxholes.',
+      'Meeting Engagement for the first player\'s first turn.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Deep Static Immediate Reserves from Turn 1 on 5+. Deployed Tanks start Bailed Out.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'salient',
+    name: 'Salient',
+    type: MissionType.manoeuvre,
+    tagline: 'A dangerous bulge in the line — both sides probe its flanks.',
+    overview:
+        'Diagonal quarter deployment. The entire game is fought at Night. Both players lay Minefields and send out Patrols. '
+        'Deep Static Immediate Reserves — deployed Tanks start Bailed Out. '
+        'Objectives in No-Man\'s Land quarters and opponent\'s quarter.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a table quarter. Defender takes opposite quarter.',
+      'Both players, starting with the Attacker, place one Minefield for each 25 points or part thereof '
+          'more than 6"/15cm from their own table quarter.',
+      'Both players roll; highest scorer chooses a short table edge for their Patrol. '
+          'The other player\'s Patrol uses the opposite short table edge.',
+      'Both players, starting with Attacker, place one Objective in the No-Man\'s Land quarter on their Patrol\'s side, '
+          'more than 4"/10cm from the long centre line, more than 8"/20cm from the short centre line and table edge, '
+          'and more than 4"/10cm from their own Deployment Area.',
+      'Both players, starting with Attacker, place one Objective in the opponent\'s table quarter, '
+          'more than 4"/10cm from both centre lines and more than 12"/30cm from the table centre.',
+      'Both players, starting with Attacker, choose an Infantry Unit as their Patrol and place Patrolling Teams '
+          'in the Patrol area (No-Man\'s Land quarter). Patrolling Teams do not start in Foxholes.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deep Static Immediate Reserves (Both Players)',
+        description:
+            'Both players deploy up to 60% of their force in their own table quarter more than 8"/20cm from the table centre, '
+            'or along their long table edge more than 16"/40cm from the long centre line. '
+            'Tank teams must be placed within 12"/30cm of their own quarter\'s corner. '
+            'Any Tank teams deployed on table start Bailed Out. Tank Units do not take Last Stand tests in their first turn. '
+            'Remainder are Deep Static Immediate Reserves, arriving from the player\'s table corner (roll from Turn 1 on 5+). '
+            'Deep reserve limits apply. Transports cannot use Bring Transports Forward.',
+      ),
+      DeploymentRule(
+        title: 'Night Rules',
+        description:
+            'The entire game is fought at Night. Teams may not move faster than Terrain Dash speed; +1 to Cross number. '
+            '+1 penalty when Shooting. Roll Night Visibility Table for Line of Sight. '
+            'Artillery Bombardments: +1 to Range In. No Aircraft.',
+      ),
+      DeploymentRule(
+        title: 'Patrol Rule',
+        description:
+            'Each player\'s Patrol Unit must have at least five non-Heavy-Weapon Infantry Teams. '
+            'Heavy Weapons and non-Infantry stay deployed; remaining Infantry are Patrolling Teams. '
+            'Patrolling Teams do not start in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn. '
+          'Night rules apply throughout the game.',
+      'All deployed Tank teams start Bailed Out.',
+      'Both sides roll for Deep Static Immediate Reserves from Turn 1.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+      'Night rules are in effect for the entire game.',
+      'Tank Units do not take Last Stand tests during their first turn.',
+      'Both sides begin rolling for Deep Static Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective in the opponent\'s Patrol area or Deployment area.',
+      ),
+    ],
+    specialRules: [
+      'Diagonal quarter deployment.',
+      'NIGHT: entire game — teams move at max Terrain Dash, +1 Shoot penalty, Night Visibility Table for LoS, no Aircraft.',
+      'Deep Static Immediate Reserves (Both Players): from Turn 1 on 5+; deployed Tanks start Bailed Out.',
+      'Minefields: both players, one per 25 pts, more than 6" from own table quarter.',
+      'Patrols: each player assigns one Infantry Unit in No-Man\'s Land area; Patrolling Teams do not start in Foxholes.',
+      'Meeting Engagement for the first player\'s first turn.',
+    ],
+    hasReserves: true,
+    reserveNote: 'Both sides: max 60% on table. Deep Static Immediate Reserves from Turn 1 on 5+. Deployed Tanks start Bailed Out.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'rescue',
+    name: 'Rescue',
+    type: MissionType.attackDefend,
+    tagline: 'Break through and reach the encircled troops.',
+    overview:
+        'Short edge orientation. The Defender picks an Objective quarter. Both Objectives are in that quarter. '
+        'Defender holds Deep Immediate Reserves arriving from the far corner. '
+        'The Attacker must capture an Objective; the Defender wins from Turn 6.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Defender picks a short table edge. Attacker attacks from the opposite end.',
+      'Defender picks one of their table quarters as the Objective quarter.',
+      'Both players, starting with the Defender, place one Objective in the Objective quarter, '
+          'more than 8"/20cm from the short centre line and all table edges.',
+      'Defender places one Minefield for each 25 points or part thereof anywhere outside the Attacker\'s deployment area.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Deep Immediate Reserves',
+        description:
+            'Defender deploys up to 60% of their force in their table half. '
+            'Holds the rest in Deep Immediate Reserve. '
+            'Reserves arrive within 16"/40cm of the table corner in Defender\'s half opposite the Objective quarter (roll from Turn 1 on 5+). '
+            'Deep reserve limits apply: no more than one Battle Tank Unit or Aircraft Unit on table. '
+            'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description:
+            'Attacker deploys all Units in their table half more than 16"/40cm from the short centre line.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender Deep Immediate Reserves: roll from Turn 1 on 5+, arrive within 16"/40cm of the corner opposite the Objective quarter.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush unit at start of their first turn.',
+      'Defender begins rolling for Deep Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Holds an Objective',
+        description:
+            'Attacker wins if they end their turn Holding an Objective. Can win any turn.',
+      ),
+      VictoryCondition(
+        title: 'Defender Repels the Attack (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack '
+            '(no Attacking Tank, Infantry, or Gun teams within 8"/20cm of any Objective).',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'Both Objectives in the Defender\'s chosen Objective quarter.',
+      'Defender: Deep Immediate Reserves from Turn 1 on 5+ (corner opposite Objective quarter).',
+      'Deep reserve limits: no more than one Battle Tank Unit or Aircraft Unit on table.',
+      'Defender may use Ambush (one Unit).',
+      'Defender Minefields: one per 25 pts, outside Attacker\'s deployment area.',
+      'Attacker may win any turn; Defender win condition activates Turn 6+.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table (heavy armour restricted). Deep Immediate Reserves from Turn 1 on 5+, arrive at corner opposite Objective quarter.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'roadblock',
+    name: 'Roadblock',
+    type: MissionType.attackDefend,
+    tagline: 'The road is blocked — clear it at all costs.',
+    overview:
+        'Long edge orientation. Both players attack from their long table edges. '
+        'Attacker has Scattered Immediate Reserves; Defender has Deep Scattered Delayed Reserves. '
+        'Both players may use Spearhead.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Defender picks a long table edge. Attacker attacks from the opposite long table edge.',
+      'Attacker places two Objectives in the Defender\'s table half, '
+          'more than 4"/10cm from the long centre line, more than 12"/30cm from the long table edge, '
+          'and more than 24"/60cm from the short table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Attacker — Scattered Immediate Reserves',
+        description:
+            'Attacker deploys up to 60% of their force within 8"/20cm of their long table edge. '
+            'Holds the rest in Scattered Immediate Reserve (roll from Turn 1 on 5+). '
+            'When each unit arrives, roll for which table edge or corner it arrives from.',
+      ),
+      DeploymentRule(
+        title: 'Defender — Deep Scattered Delayed Reserves',
+        description:
+            'Defender deploys up to 60% of their force in their table half '
+            'more than 8"/20cm from the long table edge and more than 20"/50cm from the short table edges. '
+            'Holds the rest in Deep Scattered Delayed Reserve (roll from Turn 3 on 5+). '
+            'When each unit arrives, roll for which table edge or corner it arrives from. '
+            'Deep reserve limits apply. '
+            'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Attacker Scattered Immediate Reserves: roll from Turn 1 on 5+; roll for arrival edge/corner.',
+      'Defender Deep Scattered Delayed Reserves: roll from Turn 3 on 5+; roll for arrival edge/corner.',
+      'If 3+ dice but no 5+, one unit automatically arrives.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush unit at start of their first turn.',
+      'Attacker starts rolling for Scattered Immediate Reserves from Turn 1.',
+      'Defender starts rolling for Deep Scattered Delayed Reserves from Turn 3.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Holds an Objective',
+        description:
+            'Attacker wins if they end their turn Holding an Objective. Can win any turn.',
+      ),
+      VictoryCondition(
+        title: 'Defender Repels the Attack (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack '
+            '(no Attacking Tank, Infantry, or Gun teams within 8"/20cm of any Objective).',
+      ),
+    ],
+    specialRules: [
+      'Long edge orientation — both players attack from long table edges.',
+      'Objectives set back from both table edges (more than 12" from long edge, 24" from short edges).',
+      'Attacker: Scattered Immediate Reserves from Turn 1 on 5+.',
+      'Defender: Deep Scattered Delayed Reserves from Turn 3 on 5+. No more than one Battle Tank/Aircraft on table.',
+      'Spearhead allowed for both players.',
+      'Defender may use Ambush (one Unit).',
+      'Attacker may win any turn; Defender win condition activates Turn 6+.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Attacker: max 60% on table. Scattered Immediate Reserves from Turn 1 on 5+. '
+        'Defender: max 60% on table. Deep Scattered Delayed Reserves from Turn 3 on 5+.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'straighten_the_line',
+    name: 'Straighten the Line',
+    type: MissionType.manoeuvre,
+    tagline: 'Eliminate the dangerous bulge in the front line.',
+    overview:
+        'Short edge orientation. Each player has a "salient" quarter that extends into the opponent\'s half. '
+        'Objectives are placed deep in the opponent\'s half. '
+        'Both players lay Minefields. Full deployment — no reserves.',
+    attackerRole: 'Player 1',
+    defenderRole: 'Player 2',
+    objectiveSetup: [
+      'Both players roll; highest scorer is Attacker, takes a short table edge. Defender takes opposite.',
+      'Defender picks a table quarter in their own table half as their salient. '
+          'Attacker\'s salient is in the opposite table quarter.',
+      'Both players, starting with the Attacker, place two Objectives in the opponent\'s table half, '
+          'more than 20"/50cm from the short centre line and more than 8"/20cm from all table edges.',
+      'Both players, starting with the Attacker, place one Minefield for each 50 points or part thereof '
+          'anywhere outside the opponent\'s deployment area.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Deployment Zone — Own Half or Salient Quarter',
+        description:
+            'Both players, starting with the Attacker, take turns placing a Unit in their own table half '
+            'either more than 16"/40cm from the short centre line, '
+            'OR in their salient quarter more than 8"/20cm from the long centre line, until all deployed.',
+      ),
+      DeploymentRule(
+        title: 'Full Deployment — No Reserves',
+        description: 'Both players deploy their entire force. There are no reserves.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'Both players roll — the highest scoring player has the first turn.',
+      'As a Meeting Engagement, the first player shoots as if they moved, '
+          'cannot use Artillery Bombardments, and has no Aircraft on their first turn.',
+    ],
+    firstTurnRules: [
+      'Meeting Engagement applies to the first player\'s first turn only.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Capture an Objective',
+        description:
+            'A player wins if they end their turn Holding an Objective on the opponent\'s side of the table.',
+      ),
+    ],
+    specialRules: [
+      'Short edge orientation.',
+      'Salient deployment: each player can deploy in own half (more than 16" from short centre) OR in salient quarter (more than 8" from long centre).',
+      'Objectives deep in opponent\'s half — more than 20"/50cm from short centre line.',
+      'Minefields: both players, one per 50 pts, outside opponent\'s deployment area.',
+      'Meeting Engagement for the first player\'s first turn.',
+      'No reserves — full deployment.',
+    ],
+    hasReserves: false,
+    reserveNote: 'No reserves — both sides deploy fully.',
+    turnLimit: 6,
+  ),
+
+  Mission(
+    id: 'toehold',
+    name: 'Toehold',
+    type: MissionType.attackDefend,
+    tagline: 'Establish a bridgehead and hold on.',
+    overview:
+        'A variant of Bridgehead with deployment modifications to allow Spearheads. '
+        'Long edge orientation. The Defender holds the far bank with Deep Scattered Immediate Reserves. '
+        'Both players may use Spearhead. Attacker wins any turn; Defender wins from Turn 6.',
+    attackerRole: 'Attacker',
+    defenderRole: 'Defender',
+    objectiveSetup: [
+      'Defender picks a long table edge. Attacker attacks from the opposite edge.',
+      'Attacker places two Objectives more than 4"/10cm from the long centre line, '
+          'more than 8"/20cm from the long table edge, and more than 24"/60cm from the short table edges.',
+    ],
+    deploymentRules: [
+      DeploymentRule(
+        title: 'Defender — Deep Scattered Immediate Reserves',
+        description:
+            'Defender deploys up to 60% of their force in their table half more than 20"/50cm from the short table edges. '
+            'Holds the rest in Deep Scattered Immediate Reserve (roll from Turn 1 on 5+). '
+            'When each unit arrives, roll for which table edge or corner it arrives from; '
+            'from corner, enter within 16"/40cm of that corner. '
+            'Deep reserve limits apply: no more than one Battle Tank Unit or Aircraft Unit on table. '
+            'Defender may hold one Unit in Ambush.',
+      ),
+      DeploymentRule(
+        title: 'Attacker — Full Deployment',
+        description:
+            'Attacker deploys all Units in their table half more than 16"/40cm from the long centre line '
+            'OR within 8"/20cm of the short table edge.',
+      ),
+      DeploymentRule(
+        title: 'Infantry & Guns in Foxholes',
+        description: 'All Infantry and Gun Teams start the game in Foxholes.',
+      ),
+    ],
+    startingConditions: [
+      'The Attacker has the first turn.',
+      'Defender Deep Scattered Immediate Reserves: roll from Turn 1 on 5+; roll for arrival edge/corner.',
+    ],
+    firstTurnRules: [
+      'Defender may place Ambush unit at start of their first turn.',
+      'Defender begins rolling for Deep Scattered Immediate Reserves from Turn 1.',
+    ],
+    victoryConditions: [
+      VictoryCondition(
+        title: 'Attacker Establishes Toehold',
+        description:
+            'Attacker wins if they end their turn Holding an Objective. Can win any turn.',
+      ),
+      VictoryCondition(
+        title: 'Defender Repels the Crossing (Turn 6+)',
+        description:
+            'Defender wins if they end their turn on or after Turn 6 having Repelled the Attack '
+            '(no Attacking Tank, Infantry, or Gun teams within 8"/20cm of any Objective).',
+      ),
+    ],
+    specialRules: [
+      'Long edge orientation.',
+      'Objectives set back from table edges (more than 4" from long centre, 8" from long edge, 24" from short edges).',
+      'Defender: Deep Scattered Immediate Reserves from Turn 1 on 5+ (random edge/corner).',
+      'Deep reserve limits: no more than one Battle Tank Unit or Aircraft Unit on table.',
+      'Defender may use Ambush (one Unit).',
+      'Spearhead allowed for both players.',
+      'Attacker may win any turn; Defender win condition activates Turn 6+.',
+    ],
+    hasReserves: true,
+    reserveNote:
+        'Defender: max 60% on table (heavy armour restricted). Deep Scattered Immediate Reserves from Turn 1 on 5+.',
     turnLimit: 6,
   ),
 ];

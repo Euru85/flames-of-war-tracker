@@ -42,7 +42,7 @@ class AppTheme {
         onSecondary: AppColors.darkGrey,
         onSurface: AppColors.textPrimary,
       ),
-      cardTheme: const CardTheme(
+      cardTheme: const CardThemeData(
         color: AppColors.cardBg,
         elevation: 4,
         margin: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
